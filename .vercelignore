@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.tmp_*
+reference/
+public/downloads/
+public/images/
+.vercel
