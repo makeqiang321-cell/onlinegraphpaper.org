@@ -1,0 +1,16 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.astro/
+
+# temp files
+.tmp_*
+
+# reference material (not part of the site source)
+reference/
+
+# generated assets (regenerate with: npm run generate:assets && npm run generate:previews)
+public/downloads/
+public/images/

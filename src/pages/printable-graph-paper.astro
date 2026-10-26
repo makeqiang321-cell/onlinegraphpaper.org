@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+import { paperCatalog } from '../content/paperCatalog';
+
+const title = 'Printable Graph Paper Generator — Free PDF, PNG & SVG';
+const description =
+  'Free printable graph paper generator. Browse square grid, dot grid, isometric, polar and lined paper, set size and spacing, download PDF, PNG or SVG.';
+
+const faq = [
+  {
+    q: 'What is printable graph paper?',
+    a: 'Printable graph paper is a sheet printed with a regular square grid, used for maths, drawing and design. You choose the paper size and grid spacing, then print it on any home or office printer.',
+  },
+  {
+    q: 'How does the printable graph paper generator work?',
+    a: 'Pick a paper type, set the size and spacing, and the generator draws the grid as a vector PDF. Download and print it, with no sign-up needed.',
+  },
+  {
+    q: 'How do I print graph paper at the right scale?',
+    a: 'Set your printer to 100% scale (never "fit to page") and check that the paper matches the size you picked, so one grid square prints at its true measurement.',
+  },
+  {
+    q: 'What is the difference between 5 mm and 1 cm graph paper?',
+    a: '5 mm paper has squares 5 millimetres wide; 1 cm paper has squares 10 millimetres wide. 5 mm fits more squares per page and is the standard for school maths.',
+  },
+  {
+    q: 'Which paper size is best for printable graph paper?',
+    a: 'A4 and Letter are the safest choice because every home printer supports them. Choose A3 or A2 only if your printer handles those larger sizes.',
+  },
+  {
+    q: 'Are these graph paper downloads really free?',
+    a: 'Yes. All PDF, PNG and SVG files are free to download, print and share with no login and no watermark.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: 'Printable Graph Paper Generator',
+    url: 'https://onlinegraphpaper.org/printable-graph-paper/',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://onlinegraphpaper.org/' },
+      { '@type': 'ListItem', position: 2, name: 'Printable Graph Paper', item: 'https://onlinegraphpaper.org/printable-graph-paper/' },
+    ],
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <script type="application/ld+json" is:inline slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <main>
+    <h1>Printable Graph Paper Generator</h1>
+    <p class="lead">
+      This printable graph paper generator puts every grid type on one page. Pick square grid, dot
+      grid, isometric, polar or lined paper, then set the sheet size and spacing and download a
+      print-ready PDF, PNG or SVG. Every sheet prints true to scale, with no login and no watermark.
+    </p>
+
+    <h2>Choose a template</h2>
+    <div class="cards">
+      {paperCatalog.map((e) =>
+        e.href ? (
+          <a class="card" href={e.href}>
+            <img class="thumb" src={`/images/previews/${e.id}.png`} alt={`${e.name} preview`} loading="lazy" />
+            <h3>{e.name}</h3>
+            <p>{e.desc}</p>
+            <div class="tags">{e.tags.map((t) => <span>{t}</span>)}</div>
+          </a>
+        ) : (
+          <div class="card">
+            <img class="thumb" src={`/images/previews/${e.id}.png`} alt={`${e.name} preview`} loading="lazy" />
+            <h3>{e.name}</h3>
+            <p>{e.desc}</p>
+            <div class="tags">{e.tags.map((t) => <span>{t}</span>)}</div>
+          </div>
+        )
+      )}
+    </div>
+    <p>
+      Need a custom grid? Open the <a href="/square-grid/">square grid generator</a> to set the paper
+      size, spacing and orientation yourself.
+    </p>
+
+    <h2>What is a printable graph paper generator?</h2>
+    <p>
+      A printable graph paper generator draws a square grid you can download and print. Each square is
+      a fixed size — commonly 5 mm or 1 cm — so you can draw straight lines, plot points, or sketch to
+      scale without a ruler. A teacher might print a 1 cm grid for a counting lesson, while an engineer
+      prints 2 mm paper for a circuit layout. You pick the paper size and grid spacing, download the
+      PDF, and print it on any printer.
+    </p>
+
+    <h2 id="faq">FAQ</h2>
+    {faq.map((f) => (
+      <div class="faq-item">
+        <h3>{f.q}</h3>
+        <p>{f.a}</p>
+      </div>
+    ))}
+  </main>
+</Base>

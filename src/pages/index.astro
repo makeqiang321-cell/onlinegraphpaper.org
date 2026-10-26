@@ -1,0 +1,370 @@
+---
+import Base from '../layouts/Base.astro';
+import { paperCatalog } from '../content/paperCatalog';
+
+const title = 'Online Graph Paper Generator — Free PDF, PNG & SVG';
+const description =
+  'Free online graph paper generator. Draw on graph paper in your browser, download print-ready PDF, PNG & SVG in A4, Letter, A3 and Legal, 2mm–1in spacing.';
+
+const faq = [
+  {
+    q: 'What is an online graph paper generator?',
+    a: 'An online graph paper generator — also called a graph paper maker — is a free browser tool that draws a grid you can edit on screen. Pick a paper size, spacing and orientation, sketch on the grid, then export your work as a print-ready PDF, PNG or SVG.',
+  },
+  {
+    q: 'Can I download graph paper as a PDF?',
+    a: 'Yes. Every template on this site downloads as a print-ready PDF, plus PNG and SVG versions, with no sign-up.',
+  },
+  {
+    q: 'Is this graph paper free?',
+    a: 'Yes. All tools and downloads are free, with no login, no watermark and no download limit.',
+  },
+  {
+    q: 'How big are the squares on graph paper?',
+    a: 'Common square sizes are 5 mm, 1 cm, 1/4 inch and 1/2 inch. 5 mm is the standard for school maths, and 1/4 inch matches US rulers.',
+  },
+  {
+    q: 'How do I print graph paper at the correct size?',
+    a: 'Print at 100% scale or actual size, and turn off fit-to-page, so each square keeps its true 5 mm or 1/4 inch measurement.',
+  },
+  {
+    q: 'Is quad ruled paper the same as graph paper?',
+    a: 'Yes. Quad ruled paper is square grid paper with four squares per inch, also called 4x4 or 1/4 inch graph paper.',
+  },
+  {
+    q: 'Which graph paper template should I choose?',
+    a: 'Use square grid for general maths, dot grid for notes and journaling, isometric for 3D sketches, and semi-log or polar for science plots.',
+  },
+  {
+    q: 'Can I change the size, spacing and colour?',
+    a: 'Yes. Pick any paper size from A4 to Poster, six spacings from 2 mm to 1 in, and a blue, gray or green grid.',
+  },
+  {
+    q: 'Can I use the online graph paper generator without signing up?',
+    a: 'Yes. It runs in your browser with no account and no watermark.',
+  },
+  {
+    q: 'Does the online graph paper generator work on a phone?',
+    a: 'Yes. It is responsive and works on any device with a browser.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Online Graph Paper Generator',
+    url: 'https://onlinegraphpaper.org/',
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://onlinegraphpaper.org/' },
+    ],
+  },
+];
+
+const ready = [
+  { label: 'A4 · Portrait · 5mm', name: 'A4 5mm Graph Paper', desc: 'The standard maths and notebook grid.', file: 'a4-portrait-5mm' },
+  { label: 'Letter · Portrait · 0.25in', name: 'Letter 1/4 Inch Graph Paper', desc: 'The common US classroom and office grid.', file: 'letter-portrait-0.25in' },
+  { label: 'A4 · Portrait · 1cm', name: 'A4 1cm Graph Paper', desc: 'Wider squares for early counting and big diagrams.', file: 'a4-portrait-1cm' },
+  { label: 'Letter · Portrait · 5mm', name: 'Letter 5mm Graph Paper', desc: 'A fine grid on US Letter for detailed work.', file: 'letter-portrait-5mm' },
+];
+
+const cats = [
+  { key: 'popular', title: 'Popular' },
+  { key: 'graph', title: 'Graph' },
+  { key: 'learning', title: 'Learning' },
+  { key: 'drawing', title: 'Drawing' },
+  { key: 'writing', title: 'Writing & Technical' },
+] as const;
+---
+
+<Base title={title} description={description}>
+  <script type="application/ld+json" is:inline slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <main>
+    <h1>Online Graph Paper Generator</h1>
+    <p class="lead">
+      This online graph paper generator turns any paper size into a clean, printable grid, from 5 mm
+      and 1/4 inch squares up to 1 cm. Draw on the grid in your browser, then download a print-ready
+      PDF, PNG or SVG. Isometric, semi-log, dot grid, coordinate and lined paper are built to true
+      scale by the same online graph paper maker, with no login and no watermark.
+    </p>
+
+    <section class="tool" aria-label="Online graph paper canvas">
+      <div class="controls">
+        <label>
+          Size
+          <select id="size"></select>
+        </label>
+        <label>
+          Spacing
+          <select id="spacing"></select>
+        </label>
+        <label>
+          Orientation
+          <select id="orient"></select>
+        </label>
+        <button type="button" id="clear">Clear</button>
+      </div>
+
+      <svg id="grid" viewBox="0 0 210 297" preserveAspectRatio="xMidYMid meet" aria-label="Drawable graph paper grid">
+        <g id="grid-lines"></g>
+        <g id="strokes"></g>
+      </svg>
+
+      <div class="controls" style="margin-top:.75rem">
+        <a id="dl-pdf" class="btn" href="/downloads/square-grid/a4-portrait-5mm.pdf" download>Download PDF</a>
+        <a id="dl-png" class="btn-outline" href="/images/square-grid/a4-portrait-5mm.png" download>Download PNG</a>
+        <a id="dl-svg" class="btn-outline" href="/downloads/square-grid/a4-portrait-5mm.svg" download>Download SVG</a>
+      </div>
+      <p style="font-size:.9rem;margin:.4rem 0 0">Use this graph paper maker to sketch on the grid above, then export the result.</p>
+    </section>
+
+    <h2>Ready-to-print graph paper</h2>
+    <p>
+      Start with a finished sheet when a standard grid already fits. Every PDF is generated at true
+      print scale, so the file you download matches the preview from the online graph paper maker.
+      These four are the defaults most people reach for, and each one opens in the online graph paper
+      generator when you need more control.
+    </p>
+    <div class="cards">
+      {ready.map((r) => (
+        <div class="card">
+          <small>{r.label}</small>
+          <h3>{r.name}</h3>
+          <p>{r.desc}</p>
+          <a class="btn" href={`/downloads/square-grid/${r.file}.pdf`} download>Download PDF</a>
+          <a class="btn-outline" href="/square-grid/">Open template →</a>
+        </div>
+      ))}
+    </div>
+    <p>
+      Need a different size, spacing or orientation? Change it in the online graph paper generator — <a class="btn-outline" href="/printable-graph-paper/">Browse all paper templates →</a>
+    </p>
+
+    <section id="paper-types" aria-label="Paper type catalog" style="margin-top:2.5rem">
+      <h2>Paper type catalog</h2>
+      <p>Pick the paper type that matches your task, then set the size, spacing and colour in the online graph paper generator.</p>
+      {cats.map((cat) => (
+        <div style="margin-top:2rem">
+          <h3>{cat.title}</h3>
+          <div class="cards">
+            {paperCatalog.filter((e) => e.cat === cat.key).map((e) =>
+              e.href ? (
+                <a class="card" href={e.href}>
+                  <img class="thumb" src={`/images/previews/${e.id}.png`} alt={`${e.name} preview`} loading="lazy" />
+                  <h3>{e.name}</h3>
+                  <p>{e.desc}</p>
+                  <div class="tags">{e.tags.map((t) => <span>{t}</span>)}</div>
+                </a>
+              ) : (
+                <div class="card">
+                  <img class="thumb" src={`/images/previews/${e.id}.png`} alt={`${e.name} preview`} loading="lazy" />
+                  <h3>{e.name}</h3>
+                  <p>{e.desc}</p>
+                  <div class="tags">{e.tags.map((t) => <span>{t}</span>)}</div>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      ))}
+      <p>Every template opens in the online graph paper generator, where you can change its size, spacing and colour before downloading.</p>
+    </section>
+
+    <section aria-label="How the online graph paper generator works" style="margin-top:2.5rem">
+      <h2>How the online graph paper generator works</h2>
+      <p>
+        The online graph paper generator draws every grid as vector lines, so a 5 mm square prints at
+        exactly 5 mm. Choose a paper size, spacing and orientation, then export the result as PDF, PNG or SVG.
+      </p>
+      <p>
+        It runs entirely in your browser, so nothing you draw is uploaded. Use the online graph paper
+        generator on a phone, tablet or desktop — no account and no watermark.
+      </p>
+      <p>
+        Every setting — paper size, spacing, colour, dot size and margins — is adjustable, so this
+        graph paper maker covers far more than a fixed set of PDFs.
+      </p>
+    </section>
+
+    <section aria-label="Find the right graph paper" style="margin-top:2.5rem">
+      <h2>Find the right graph paper for the job</h2>
+      <p>
+        Most people do not need to think about every setting first. Start from the task in front of
+        you, then adjust the sheet in the graph paper maker.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <h3>Math class</h3>
+          <p>Start with 5 mm square grid or coordinate plane paper for plotting, tables and diagrams.</p>
+          <a href="/square-grid/">Open template →</a>
+        </div>
+        <div class="card">
+          <h3>Journaling</h3>
+          <p>Use dot grid or lined paper when you want structure without heavy printed lines.</p>
+          <a href="#paper-types">Open template →</a>
+        </div>
+        <div class="card">
+          <h3>Technical drawing</h3>
+          <p>Pick isometric, hex or engineering-style grids for objects, maps, layouts and plans.</p>
+          <a href="/isometric-grid/">Open template →</a>
+        </div>
+        <div class="card">
+          <h3>Science plots</h3>
+          <p>Use polar and semi-log paper for angle work, circular data and growth curves.</p>
+          <a href="#paper-types">Open template →</a>
+        </div>
+      </div>
+      <p>Each starting point opens in the online graph paper generator with sensible defaults, ready to print or tweak.</p>
+    </section>
+
+    <h2>Make the printed grid come out right</h2>
+    <p>
+      A grid is only useful when the printed scale is predictable. Every PDF from the online graph
+      paper generator is built for a real paper size, but the print dialog still controls the final result.
+    </p>
+    <ol>
+      <li><strong>Use 100% scale</strong> — pick "actual size" and turn off fit-to-page, which shrinks or stretches the grid.</li>
+      <li><strong>Match the paper size</strong> — set the PDF to the sheet you loaded (A4, Letter or the size you picked) so lines land where you expect.</li>
+      <li><strong>Print one test page</strong> — measure one square (a 5 mm square should be exactly 5 mm) before printing a full worksheet set.</li>
+      <li><strong>Re-check the scale</strong> — if a square measures wrong, adjust the settings in the online graph paper generator and download again.</li>
+    </ol>
+
+    <h2 id="faq">FAQ</h2>
+    <p>
+      Practical answers about the online graph paper generator, printable PDFs, grid spacing, quad
+      ruled paper and printing at the right size.
+    </p>
+    {faq.map((f) => (
+      <div class="faq-item">
+        <h3>{f.q}</h3>
+        <p>{f.a}</p>
+      </div>
+    ))}
+
+    <footer>
+      <p>All generated PDF files are free for personal, educational and commercial use.</p>
+      <div class="cols">
+        <div>
+          <h2>Tools</h2>
+          <ul>
+            <li><a href="/printable-graph-paper/">Printable Graph Paper</a></li>
+            <li><a href="/square-grid/">Square Grid</a></li>
+            <li><a href="/isometric-grid/">Isometric Grid</a></li>
+            <li><a href="/semi-log-graph-paper/">Semi-Log Graph Paper</a></li>
+            <li><a href="/graph-paper-generator/">Online Graph Paper Generator</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="#paper-types">Paper type catalog</a></li>
+            <li><a href="/printable-graph-paper/">Printable graph paper PDF</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <p><a href="/">Home</a> · <a href="/privacy/">Privacy Policy</a> · <a href="/sitemap.xml">Sitemap</a> · © 2026 onlinegraphpaper.org</p>
+    </footer>
+  </main>
+
+  <script>
+    import { sizes } from '../data/sizes';
+    import { spacings } from '../data/spacings';
+    import { defaultGridColor } from '../data/gridColors';
+
+    const sizeSel = document.getElementById('size') as HTMLSelectElement;
+    const spacingSel = document.getElementById('spacing') as HTMLSelectElement;
+    const orientSel = document.getElementById('orient') as HTMLSelectElement;
+    const svg = document.getElementById('grid') as SVGSVGElement;
+    const gridG = document.getElementById('grid-lines') as SVGGElement;
+    const strokeG = document.getElementById('strokes') as SVGGElement;
+    const dlPdf = document.getElementById('dl-pdf') as HTMLAnchorElement;
+    const dlPng = document.getElementById('dl-png') as HTMLAnchorElement;
+    const dlSvg = document.getElementById('dl-svg') as HTMLAnchorElement;
+
+    const NS = 'http://www.w3.org/2000/svg';
+
+    // Populate the selects (sizes/spacings/orientations) once.
+    sizeSel.innerHTML = sizes.map((s) => `<option value="${s.id}">${s.name} — ${s.widthMm} × ${s.heightMm} mm</option>`).join('');
+    spacingSel.innerHTML = spacings.map((sp) => `<option value="${sp.id}">${sp.id} (${sp.mm} mm)</option>`).join('');
+    orientSel.innerHTML = ['portrait', 'landscape'].map((o) => `<option value="${o}">${o}</option>`).join('');
+
+    function current() {
+      const size = sizes.find((s) => s.id === sizeSel.value)!;
+      const spacing = spacings.find((sp) => sp.id === spacingSel.value)!;
+      return { size, spacing, orient: orientSel.value };
+    }
+
+    function render() {
+      const { size, spacing, orient } = current();
+      const w = orient === 'landscape' ? size.heightMm : size.widthMm;
+      const h = orient === 'landscape' ? size.widthMm : size.heightMm;
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      let lines = '';
+      for (let x = 0; x <= w + 1e-6; x += spacing.mm) {
+        lines += `<line x1="${x.toFixed(3)}" y1="0" x2="${x.toFixed(3)}" y2="${h.toFixed(3)}" stroke="${defaultGridColor.hex}" stroke-width="0.2"/>`;
+      }
+      for (let y = 0; y <= h + 1e-6; y += spacing.mm) {
+        lines += `<line x1="0" y1="${y.toFixed(3)}" x2="${w.toFixed(3)}" y2="${y.toFixed(3)}" stroke="${defaultGridColor.hex}" stroke-width="0.2"/>`;
+      }
+      gridG.innerHTML = lines;
+      const base = `${size.id}-${orient}-${spacing.id}`;
+      dlPdf.href = `/downloads/square-grid/${base}.pdf`;
+      dlPng.href = `/images/square-grid/${base}.png`;
+      dlSvg.href = `/downloads/square-grid/${base}.svg`;
+    }
+
+    let drawing = false;
+    let path: SVGPolylineElement | null = null;
+
+    function toPoint(e: PointerEvent) {
+      const pt = svg.createSVGPoint();
+      pt.x = e.clientX;
+      pt.y = e.clientY;
+      const ctm = svg.getScreenCTM();
+      if (!ctm) return pt;
+      return pt.matrixTransform(ctm.inverse());
+    }
+
+    svg.addEventListener('pointerdown', (e) => {
+      drawing = true;
+      svg.setPointerCapture(e.pointerId);
+      path = document.createElementNS(NS, 'polyline');
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', '#111827');
+      path.setAttribute('stroke-width', '0.6');
+      const p = toPoint(e);
+      path.setAttribute('points', `${p.x.toFixed(2)},${p.y.toFixed(2)}`);
+      strokeG.appendChild(path);
+    });
+    svg.addEventListener('pointermove', (e) => {
+      if (!drawing || !path) return;
+      const p = toPoint(e);
+      path.setAttribute('points', `${path.getAttribute('points')} ${p.x.toFixed(2)},${p.y.toFixed(2)}`);
+    });
+    svg.addEventListener('pointerup', () => { drawing = false; path = null; });
+    svg.addEventListener('pointercancel', () => { drawing = false; path = null; });
+
+    document.getElementById('clear')!.addEventListener('click', () => { strokeG.innerHTML = ''; });
+
+    sizeSel.addEventListener('change', render);
+    spacingSel.addEventListener('change', render);
+    orientSel.addEventListener('change', render);
+
+    render();
+  </script>
+</Base>

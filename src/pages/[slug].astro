@@ -1,0 +1,652 @@
+---
+import Base from '../layouts/Base.astro';
+import { paperTypes } from '../data/paperTypes';
+import { sizes } from '../data/sizes';
+import { spacings } from '../data/spacings';
+import { gridColors } from '../data/gridColors';
+import { themes } from '../data/themes';
+import { paperPages } from '../content/paperPages';
+import { paperExtras } from '../content/paperExtras';
+
+export function getStaticPaths() {
+  return paperTypes.map((type) => ({ params: { slug: type.slug }, props: { type } }));
+}
+
+const { type } = Astro.props;
+const content = paperPages[type.slug];
+const extra = paperExtras[type.slug];
+const slugToName = Object.fromEntries(paperTypes.map((t) => [`/${t.slug}/`, t.name]));
+const orientations = ['portrait', 'landscape'];
+const pn = (t: string) => (/^printable\b/i.test(t) ? t : `Printable ${t}`);
+
+const presets = [
+  { base: 'a4-portrait-5mm', size: 'A4', spacing: '5 mm', name: `A4 5mm ${pn(type.name)}`, desc: 'The default grid for school and notebook work.' },
+  { base: 'letter-portrait-0.25in', size: 'Letter', spacing: '1/4 in', name: `Letter 1/4 Inch ${pn(type.name)}`, desc: 'The common US classroom and office grid.' },
+  { base: 'a4-portrait-1cm', size: 'A4', spacing: '1 cm', name: `A4 1cm ${pn(type.name)}`, desc: 'Larger spacing for counting and big sketches.' },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: type.name,
+    url: `https://onlinegraphpaper.org/${type.slug}/`,
+  },
+  {
+    '@type': 'WebApplication',
+    name: `${type.name} Generator`,
+    url: `https://onlinegraphpaper.org/${type.slug}/`,
+    applicationCategory: 'UtilitiesApplication',
+    operatingSystem: 'Any',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  },
+  {
+    '@type': 'ItemList',
+    name: `${type.name} Templates`,
+    itemListElement: presets.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.name,
+      url: `https://onlinegraphpaper.org/${type.slug}/#template-${p.base}`,
+    })),
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: content.faq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@type': 'HowTo',
+    name: `How to print ${type.name.toLowerCase()}`,
+    step: content.printing.map((p, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      text: p,
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://onlinegraphpaper.org/' },
+      { '@type': 'ListItem', position: 2, name: type.name, item: `https://onlinegraphpaper.org/${type.slug}/` },
+    ],
+  },
+];
+---
+
+<Base title={type.title} description={type.description}>
+  <script type="application/ld+json" is:inline slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <main data-paper-type={type.slug}>
+    <h1>{type.name}</h1>
+    <p class="lead">{content.intro}</p>
+
+    <section class="takeaways" aria-label="Key takeaways">
+      <h2>Key takeaways</h2>
+      <ul>
+        {content.takeaways.map((t) => <li>{t}</li>)}
+      </ul>
+    </section>
+    <p class="crumbs"><a href="/">Home</a> · <a href="/printable-graph-paper/">All graph paper types</a></p>
+
+    <section class="gen" aria-label={`${type.name} generator`}>
+      <div class="gen-steps">
+        <div class="step">
+          <span class="step-num">01</span>
+          <h3>Choose the finished page</h3>
+          <p>Match the paper size to your printer, then pick portrait or landscape.</p>
+          <label>Size
+            <select id="size">
+              {sizes.map((s) => <option value={s.id}>{s.name} — {s.widthMm} × {s.heightMm} mm</option>)}
+            </select>
+          </label>
+          <label>Orientation
+            <select id="orient">
+              {orientations.map((o) => <option value={o}>{o}</option>)}
+            </select>
+          </label>
+        </div>
+
+        <div class="step">
+          <span class="step-num">02</span>
+          <h3>Configure the grid</h3>
+          <p>Pick a theme, then fine-tune spacing, line color, dot size, opacity and margins.</p>
+          <label>Theme
+            <select id="theme">
+              {themes.map((t) => <option value={t.id}>{t.name}</option>)}
+            </select>
+          </label>
+          <label>Spacing
+            <select id="spacing">
+              {spacings.map((sp) => <option value={sp.id}>{sp.id} ({sp.mm} mm)</option>)}
+            </select>
+          </label>
+          <label>Color
+            <select id="color">
+              {gridColors.map((c) => <option value={c.id}>{c.id}</option>)}
+            </select>
+          </label>
+          {type.slug === 'dot-grid' && (
+            <label>Dot size (mm)
+              <input type="number" id="dot-size" value="0.35" min="0.1" max="2" step="0.05" />
+            </label>
+          )}
+          <label>Opacity
+            <input type="number" id="opacity" value="1" min="0.1" max="1" step="0.05" />
+          </label>
+          <div class="margins">
+            <span>Margins (mm)</span>
+            <label>Top <input type="number" id="margin-top" value="10" min="0" max="50" step="1" /></label>
+            <label>Right <input type="number" id="margin-right" value="10" min="0" max="50" step="1" /></label>
+            <label>Bottom <input type="number" id="margin-bottom" value="10" min="0" max="50" step="1" /></label>
+            <label>Left <input type="number" id="margin-left" value="10" min="0" max="50" step="1" /></label>
+          </div>
+          <button type="button" id="btn-reset">Reset to defaults</button>
+        </div>
+
+        <div class="step">
+          <span class="step-num">03</span>
+          <h3>Start from a practical setting</h3>
+          <p>Jump to a ready template, then fine-tune the settings from there.</p>
+          <ul>
+            {presets.map((p) => <li><a href={`#template-${p.base}`}>{p.size} · {p.spacing}</a></li>)}
+          </ul>
+        </div>
+
+        <div class="step">
+          <span class="step-num">04</span>
+          <h3>Check the preview, export or print</h3>
+          <p>Download the sheet as PDF, PNG or SVG, or print it straight from the browser.</p>
+          <div class="controls" style="margin:.5rem 0 0">
+            <a id="dl-pdf" class="btn" href={`/downloads/${type.slug}/a4-portrait-5mm.pdf`} download>PDF</a>
+            <a id="dl-png" class="btn-outline" href={`/images/${type.slug}/a4-portrait-5mm.png`} download>PNG</a>
+            <a id="dl-svg" class="btn-outline" href={`/downloads/${type.slug}/a4-portrait-5mm.svg`} download>SVG</a>
+            <button id="btn-print" type="button">Print</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview">
+        <svg id="grid" viewBox="0 0 210 297" preserveAspectRatio="xMidYMid meet" aria-label={`${type.name} grid preview`}>
+          <rect id="bg" width="210" height="297" fill="#ffffff"></rect>
+          <g id="grid-lines"></g>
+          <g id="margin-cover"></g>
+        </svg>
+      </div>
+    </section>
+
+    <h2>{type.name} Templates</h2>
+    <p>Ready-made {type.name.toLowerCase()} pages — click a card to load the preset, or grab the PDF and PNG directly.</p>
+    <div class="cards">
+      {presets.map((p) => (
+        <div class="card">
+          <a class="tpl-thumb" href={`#template-${p.base}`}><img src={`/images/${type.slug}/${p.base}.png`} alt={`${p.name} preview`} loading="lazy" /></a>
+          <h3><a href={`#template-${p.base}`}>{p.name}</a></h3>
+          <p>{p.desc}</p>
+          <a class="btn" href={`/downloads/${type.slug}/${p.base}.pdf`} download>PDF</a>
+          <a class="btn-outline" href={`/images/${type.slug}/${p.base}.png`} download>PNG</a>
+        </div>
+      ))}
+    </div>
+
+    <h2>How to use {type.name.toLowerCase()}</h2>
+    <div class="article">
+      <h3>What is {type.name.toLowerCase()}?</h3>
+      <p>{content.whatIs}</p>
+      {content.article.map((s) => (
+        <section>
+          <h3>{s.h3}</h3>
+          <p>{s.body}</p>
+        </section>
+      ))}
+    </div>
+
+    {content.sizing && (
+      <section class="sizing">
+        <h2>{type.name} sizes and spacing</h2>
+        <table>
+          <thead>
+            <tr><th>Option</th><th>What it gives you</th><th>Best for</th></tr>
+          </thead>
+          <tbody>
+            {content.sizing.map((r) => (
+              <tr><td>{r.opt}</td><td>{r.feel}</td><td>{r.use}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    )}
+
+    {extra.applications && (
+      <section class="app-list">
+        <h2>Where {type.name.toLowerCase()} is used</h2>
+        {extra.applications.map((a) => (
+          <div class="app-group">
+            <h3>{a.h3}</h3>
+            <ul>
+              {a.items.map((it) => (it.href ? <li>{it.text} — <a href={it.href}>{slugToName[it.href]}</a></li> : <li>{it.text}</li>))}
+            </ul>
+          </div>
+        ))}
+      </section>
+    )}
+
+    {extra.comparison && (
+      <section class="compare">
+        <h2>{extra.comparison.aLabel} vs {extra.comparison.bLabel}</h2>
+        <table>
+          <thead>
+            <tr><th>Feature</th><th>{extra.comparison.aLabel}</th><th>{extra.comparison.bLabel}</th></tr>
+          </thead>
+          <tbody>
+            {extra.comparison.rows.map((r) => (
+              <tr><td>{r.feature}</td><td>{r.a}</td><td>{r.b}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    )}
+
+    {extra.gallery && (
+      <section class="gallery">
+        <h2>{type.name} examples</h2>
+        <div class="cards">
+          {extra.gallery.map((g) => (
+            <figure class="card">
+              <a class="tpl-thumb" href={`/images/${type.slug}/${g.base}.png`}><img src={`/images/${type.slug}/${g.base}.png`} alt={g.caption} loading="lazy" /></a>
+              <figcaption>{g.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <h2 id="downloads">{type.name} Downloads</h2>
+    <p>84 templates across 7 paper sizes and 6 spacings. Each card links the PDF, PNG and SVG for that exact grid.</p>
+    {sizes.map((s) => (
+      <details>
+        <summary>{s.name} — {s.widthMm} × {s.heightMm} mm ({s.widthIn} × {s.heightIn} in)</summary>
+        <div class="cards">
+          {orientations.map((orient) =>
+            spacings.map((sp) => (
+              <div class="card" id={`${s.id}-${orient}-${sp.id}`}>
+                <h3>{s.name} · {sp.id} · {orient === 'portrait' ? 'Portrait' : 'Landscape'}</h3>
+                <p>{s.widthMm} × {s.heightMm} mm · {sp.id} ({sp.mm} mm) spacing</p>
+                <a href={`/downloads/${type.slug}/${s.id}-${orient}-${sp.id}.pdf`} download>PDF</a>
+                <a href={`/images/${type.slug}/${s.id}-${orient}-${sp.id}.png`} download>PNG</a>
+                <a href={`/downloads/${type.slug}/${s.id}-${orient}-${sp.id}.svg`} download>SVG</a>
+              </div>
+            ))
+          )}
+        </div>
+      </details>
+    ))}
+
+    <h2 id="how-to-print">How to print {type.name.toLowerCase()}</h2>
+    <ol>
+      {content.printing.map((p) => <li>{p}</li>)}
+    </ol>
+
+    <h2 id="faq">FAQ</h2>
+    {content.faq.map((f) => (
+      <div class="faq-item">
+        <h3>{f.q}</h3>
+        <p>{f.a}</p>
+      </div>
+    ))}
+
+    <nav class="more" aria-label="Related pages" style="margin-top:2.5rem">
+      <h2>Related pages</h2>
+      <ul>
+        <li><a href="/">Graph Paper</a></li>
+        <li><a href="/">Graph Paper Generator</a></li>
+        <li><a href="/">Online Graph Paper</a></li>
+        {content.related.map((r) => <li><a href={r.href}>{r.text}</a></li>)}
+      </ul>
+    </nav>
+  </main>
+
+  <style>
+    .takeaways { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+    .takeaways h2 { margin: 0 0 .5rem; font-size: .82rem; text-transform: uppercase; letter-spacing: .05em; color: var(--primary); }
+    .takeaways ul { margin: 0; padding-left: 1.25rem; color: var(--muted); }
+    .takeaways li { margin: .25rem 0; }
+    .article section { margin: 1.1rem 0; }
+    .article h3 { margin-bottom: .3rem; }
+    .sizing table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .sizing th, .sizing td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); font-size: .9rem; }
+    .sizing th { background: var(--primary-soft); color: var(--text); font-weight: 650; }
+    .sizing td { color: var(--muted); }
+    .sizing tr:last-child td { border-bottom: none; }
+    .crumbs { font-size: .9rem; }
+    .app-group { margin: 1rem 0; }
+    .app-group h3 { margin: 0 0 .35rem; }
+    .app-group ul { margin: 0; padding-left: 1.25rem; color: var(--muted); }
+    .compare table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .compare th, .compare td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); font-size: .9rem; }
+    .compare th { background: var(--primary-soft); color: var(--text); font-weight: 650; }
+    .compare td { color: var(--muted); }
+    .compare tr:last-child td { border-bottom: none; }
+    .gallery figure { margin: 0; }
+    .gallery .card { padding-top: 0; }
+    .gallery figcaption { margin-top: .4rem; font-size: .86rem; color: var(--faint); }
+    .step input[type="number"] { width: 100%; padding: .5rem .6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font-size: .9rem; font-family: inherit; }
+    .margins { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; margin: .3rem 0; }
+    .margins > span { grid-column: 1 / -1; font-size: .78rem; font-weight: 650; color: var(--faint); }
+    .margins label { font-size: .72rem; }
+    #btn-reset { margin-top: .6rem; font-size: .85rem; padding: .5rem .8rem; }
+  </style>
+
+  <script>
+    import { sizes } from '../data/sizes';
+    import { spacings } from '../data/spacings';
+    import { gridColors, defaultGridColor } from '../data/gridColors';
+    import { themes, defaultTheme } from '../data/themes';
+    import { gridPrims, primsToSvg, type Prim } from '../lib/grid';
+
+    const typeSlug = document.querySelector('main')!.dataset.paperType ?? '';
+    const sizeSel = document.getElementById('size') as HTMLSelectElement;
+    const spacingSel = document.getElementById('spacing') as HTMLSelectElement;
+    const orientSel = document.getElementById('orient') as HTMLSelectElement;
+    const colorSel = document.getElementById('color') as HTMLSelectElement;
+    const svg = document.getElementById('grid') as SVGSVGElement;
+    const gridG = document.getElementById('grid-lines') as SVGGElement;
+    const dlPdf = document.getElementById('dl-pdf') as HTMLAnchorElement;
+    const dlPng = document.getElementById('dl-png') as HTMLAnchorElement;
+    const dlSvg = document.getElementById('dl-svg') as HTMLAnchorElement;
+    const btnPrint = document.getElementById('btn-print') as HTMLButtonElement;
+    const themeSel = document.getElementById('theme') as HTMLSelectElement;
+    const dotSizeSel = document.getElementById('dot-size') as HTMLInputElement | null;
+    const opacitySel = document.getElementById('opacity') as HTMLInputElement;
+    const marginTop = document.getElementById('margin-top') as HTMLInputElement;
+    const marginRight = document.getElementById('margin-right') as HTMLInputElement;
+    const marginBottom = document.getElementById('margin-bottom') as HTMLInputElement;
+    const marginLeft = document.getElementById('margin-left') as HTMLInputElement;
+    const btnReset = document.getElementById('btn-reset') as HTMLButtonElement;
+    const bgRect = document.getElementById('bg') as SVGRectElement;
+    const marginCover = document.getElementById('margin-cover') as SVGGElement;
+
+    const DPI = 300;
+    const MM_TO_PT = 72 / 25.4;
+
+    function colorHex(): string {
+      return gridColors.find((c) => c.id === colorSel.value)?.hex ?? defaultGridColor.hex;
+    }
+
+    function currentTheme() {
+      return themes.find((t) => t.id === themeSel.value) ?? defaultTheme;
+    }
+
+    function readNumber(el: HTMLInputElement | null, fallback: number): number {
+      if (!el) return fallback;
+      const v = parseFloat(el.value);
+      return isNaN(v) ? fallback : v;
+    }
+
+    function readOpacity(): number {
+      return Math.min(1, Math.max(0.1, readNumber(opacitySel, 1)));
+    }
+
+    function readDotSize(): number {
+      return Math.min(2, Math.max(0.1, readNumber(dotSizeSel, 0.35)));
+    }
+
+    function readMargins() {
+      const n = (el: HTMLInputElement) => Math.max(0, readNumber(el, 0));
+      return { top: n(marginTop), right: n(marginRight), bottom: n(marginBottom), left: n(marginLeft) };
+    }
+
+    function marginCoverSvg(w: number, h: number, m: { top: number; right: number; bottom: number; left: number }, color: string): string {
+      const r = (x: number, y: number, ww: number, hh: number) => `<rect x="${x}" y="${y}" width="${ww}" height="${hh}" fill="${color}"/>`;
+      return (
+        r(0, 0, w, m.top) +
+        r(0, h - m.bottom, w, m.bottom) +
+        r(0, m.top, m.left, h - m.top - m.bottom) +
+        r(w - m.right, m.top, m.right, h - m.top - m.bottom)
+      );
+    }
+
+    function svgMarkup(prims: Prim[], color: string, w: number, h: number, opts?: { background?: string; opacity?: number; margins?: { top: number; right: number; bottom: number; left: number } }): string {
+      const pxW = Math.round((w * DPI) / 25.4);
+      const pxH = Math.round((h * DPI) / 25.4);
+      const bg = opts?.background ?? '#ffffff';
+      const opacity = opts?.opacity ?? 1;
+      const m = opts?.margins ?? { top: 0, right: 0, bottom: 0, left: 0 };
+      const grid = `<g opacity="${opacity}">${primsToSvg(prims, color)}</g>`;
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="${pxW}" height="${pxH}" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${bg}"/>${grid}${marginCoverSvg(w, h, m, bg)}</svg>`;
+    }
+
+    function rgb01(hex: string) {
+      const n = parseInt(hex.slice(1), 16);
+      return { r: ((n >> 16) & 255) / 255, g: ((n >> 8) & 255) / 255, b: (n & 255) / 255 };
+    }
+
+    async function pngBlob(svgText: string, w: number, h: number): Promise<Blob> {
+      const pxW = Math.round((w * DPI) / 25.4);
+      const pxH = Math.round((h * DPI) / 25.4);
+      const img = new Image();
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgText);
+      await img.decode();
+      const canvas = document.createElement('canvas');
+      canvas.width = pxW;
+      canvas.height = pxH;
+      const ctx = canvas.getContext('2d')!;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, pxW, pxH);
+      ctx.drawImage(img, 0, 0, pxW, pxH);
+      return new Promise<Blob>((resolve, reject) =>
+        canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('PNG export failed'))), 'image/png'),
+      );
+    }
+
+    async function pdfBlob(prims: Prim[], w: number, h: number, colorHex: string, opts?: { background?: string; opacity?: number; margins?: { top: number; right: number; bottom: number; left: number } }): Promise<Blob> {
+      const { PDFDocument, rgb, StandardFonts } = await import('pdf-lib');
+      const doc = await PDFDocument.create();
+      const page = doc.addPage([w * MM_TO_PT, h * MM_TO_PT]);
+      const font = await doc.embedFont(StandardFonts.Helvetica);
+      const base = rgb01(colorHex);
+      const color = rgb(base.r, base.g, base.b);
+      const opacity = opts?.opacity ?? 1;
+      const bg = opts?.background ? rgb01(opts.background) : { r: 1, g: 1, b: 1 };
+      const bgColor = rgb(bg.r, bg.g, bg.b);
+      page.drawRectangle({ x: 0, y: 0, width: w * MM_TO_PT, height: h * MM_TO_PT, color: bgColor });
+      for (const p of prims) {
+        if (p.k === 'line') {
+          const lc = p.color ? rgb01(p.color) : base;
+          page.drawLine({ start: { x: p.x1 * MM_TO_PT, y: p.y1 * MM_TO_PT }, end: { x: p.x2 * MM_TO_PT, y: p.y2 * MM_TO_PT }, thickness: p.bold ? 0.6 : 0.3, color: rgb(lc.r, lc.g, lc.b), opacity });
+        } else if (p.k === 'dot') {
+          page.drawCircle({ x: p.cx * MM_TO_PT, y: p.cy * MM_TO_PT, size: p.r * 2 * MM_TO_PT, color, opacity });
+        } else if (p.k === 'circle') {
+          page.drawCircle({ x: p.cx * MM_TO_PT, y: p.cy * MM_TO_PT, size: p.r * 2 * MM_TO_PT, borderColor: color, borderWidth: p.bold ? 0.5 : 0.3, opacity });
+        } else if (p.k === 'rect') {
+          page.drawRectangle({ x: p.x * MM_TO_PT, y: p.y * MM_TO_PT, width: p.w * MM_TO_PT, height: p.h * MM_TO_PT, borderColor: color, borderWidth: p.bold ? 0.5 : 0.3, opacity });
+        } else {
+          const size = p.size * MM_TO_PT;
+          page.drawText(p.str, { x: p.x * MM_TO_PT - (p.anchor === 'middle' ? font.widthOfTextAtSize(p.str, size) / 2 : 0), y: p.y * MM_TO_PT, size, color, font, opacity });
+        }
+      }
+      const m = opts?.margins ?? { top: 0, right: 0, bottom: 0, left: 0 };
+      const cover = (x: number, y: number, ww: number, hh: number) => page.drawRectangle({ x: x * MM_TO_PT, y: y * MM_TO_PT, width: ww * MM_TO_PT, height: hh * MM_TO_PT, color: bgColor });
+      cover(0, 0, w, m.top);
+      cover(0, h - m.bottom, w, m.bottom);
+      cover(0, m.top, m.left, h - m.top - m.bottom);
+      cover(w - m.right, m.top, m.right, h - m.top - m.bottom);
+      return new Blob([await doc.save()], { type: 'application/pdf' });
+    }
+
+    let renderSeq = 0;
+    let blobUrls: string[] = [];
+
+    async function render() {
+      const seq = ++renderSeq;
+      const size = sizes.find((s) => s.id === sizeSel.value)!;
+      const spacing = spacings.find((sp) => sp.id === spacingSel.value)!;
+      const orient = orientSel.value;
+      const w = orient === 'landscape' ? size.heightMm : size.widthMm;
+      const h = orient === 'landscape' ? size.widthMm : size.heightMm;
+      const theme = currentTheme();
+      const hex = colorHex();
+      const background = theme.background;
+      const opacity = readOpacity();
+      const dotSize = readDotSize();
+      const margins = readMargins();
+      const prims = gridPrims(typeSlug, w, h, spacing.mm, dotSize);
+
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      bgRect.setAttribute('width', String(w));
+      bgRect.setAttribute('height', String(h));
+      bgRect.setAttribute('fill', background);
+      gridG.setAttribute('opacity', String(opacity));
+      gridG.innerHTML = primsToSvg(prims, hex);
+      marginCover.innerHTML = marginCoverSvg(w, h, margins, background);
+
+      const base = `${size.id}-${orient}-${spacing.id}`;
+      dlPdf.download = `${base}.pdf`;
+      dlPng.download = `${base}.png`;
+      dlSvg.download = `${base}.svg`;
+
+      // Blue-on-white, full-bleed grids match the pre-generated server assets (static URLs, work without JS).
+      const isDefault =
+        hex.toLowerCase() === defaultGridColor.hex.toLowerCase() &&
+        background.toLowerCase() === '#ffffff' &&
+        opacity === 1 &&
+        dotSize === 0.35 &&
+        margins.top === 0 && margins.right === 0 && margins.bottom === 0 && margins.left === 0;
+
+      if (isDefault) {
+        dlPdf.href = `/downloads/${typeSlug}/${base}.pdf`;
+        dlPng.href = `/images/${typeSlug}/${base}.png`;
+        dlSvg.href = `/downloads/${typeSlug}/${base}.svg`;
+        return;
+      }
+
+      // Custom options: build the files in the browser so the download matches the preview.
+      const opts = { background, opacity, margins };
+      const svgText = svgMarkup(prims, hex, w, h, opts);
+      const [png, pdf] = await Promise.all([pngBlob(svgText, w, h), pdfBlob(prims, w, h, hex, opts)]);
+      if (seq !== renderSeq) return; // a newer render superseded this one
+
+      blobUrls.forEach((u) => URL.revokeObjectURL(u));
+      blobUrls = [
+        URL.createObjectURL(new Blob([svgText], { type: 'image/svg+xml' })),
+        URL.createObjectURL(png),
+        URL.createObjectURL(pdf),
+      ];
+      dlSvg.href = blobUrls[0];
+      dlPng.href = blobUrls[1];
+      dlPdf.href = blobUrls[2];
+    }
+
+    function printGrid() {
+      const size = sizes.find((s) => s.id === sizeSel.value)!;
+      const spacing = spacings.find((sp) => sp.id === spacingSel.value)!;
+      const orient = orientSel.value;
+      const w = orient === 'landscape' ? size.heightMm : size.widthMm;
+      const h = orient === 'landscape' ? size.widthMm : size.heightMm;
+      const theme = currentTheme();
+      const hex = colorHex();
+      const opacity = readOpacity();
+      const margins = readMargins();
+      const prims = gridPrims(typeSlug, w, h, spacing.mm, readDotSize());
+      const grid = `<g opacity="${opacity}">${primsToSvg(prims, hex)}</g>`;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}mm" height="${h}mm" viewBox="0 0 ${w} ${h}"><rect width="${w}" height="${h}" fill="${theme.background}"/>${grid}${marginCoverSvg(w, h, margins, theme.background)}</svg>`;
+      const win = window.open('', '_blank');
+      if (!win) { alert('The print window was blocked. Allow pop-ups for this site to print the grid.'); return; }
+      win.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${typeSlug} — ${size.id} ${orient}</title><style>@page{size:${w}mm ${h}mm;margin:0}body{margin:0}svg{display:block;width:${w}mm;height:${h}mm}</style></head><body>${svg}</body></html>`);
+      win.document.close();
+      setTimeout(() => { win.focus(); win.print(); }, 150);
+    }
+
+    function updateHash() {
+      const m = readMargins();
+      const params = new URLSearchParams();
+      params.set('size', sizeSel.value);
+      params.set('spacing', spacingSel.value);
+      params.set('orientation', orientSel.value);
+      params.set('theme', themeSel.value);
+      params.set('color', colorSel.value);
+      if (dotSizeSel) params.set('dotSize', dotSizeSel.value);
+      params.set('opacity', opacitySel.value);
+      params.set('margin', `${m.top},${m.right},${m.bottom},${m.left}`);
+      history.replaceState(null, '', `#${params.toString()}`);
+    }
+
+    function applyHash() {
+      const h = location.hash.replace(/^#/, '');
+      if (!h) return;
+      let sizeId: string | null = null;
+      let orient: string | null = null;
+      let spacingId: string | null = null;
+      let colorId: string | null = null;
+      let themeId: string | null = null;
+      let dotSize: string | null = null;
+      let opacity: string | null = null;
+      let margin: string | null = null;
+      if (h.startsWith('template-')) {
+        const parts = h.slice('template-'.length).split('-');
+        if (parts.length === 3) {
+          sizeId = parts[0];
+          orient = parts[1];
+          spacingId = parts[2];
+        }
+      } else {
+        const q = new URLSearchParams(h);
+        sizeId = q.get('size');
+        orient = q.get('orientation');
+        spacingId = q.get('spacing');
+        colorId = q.get('color');
+        themeId = q.get('theme');
+        dotSize = q.get('dotSize');
+        opacity = q.get('opacity');
+        margin = q.get('margin');
+      }
+      if (sizeId && sizes.some((s) => s.id === sizeId)) sizeSel.value = sizeId;
+      if (orient && (orient === 'portrait' || orient === 'landscape')) orientSel.value = orient;
+      if (spacingId && spacings.some((s) => s.id === spacingId)) spacingSel.value = spacingId;
+      if (colorId && gridColors.some((c) => c.id === colorId)) colorSel.value = colorId;
+      if (themeId && themes.some((t) => t.id === themeId)) themeSel.value = themeId;
+      if (dotSize && dotSizeSel) dotSizeSel.value = dotSize;
+      if (opacity) opacitySel.value = opacity;
+      if (margin) {
+        const parts = margin.split(',').map((n) => parseFloat(n));
+        if (parts.length === 4 && parts.every((n) => !isNaN(n))) {
+          marginTop.value = String(parts[0]);
+          marginRight.value = String(parts[1]);
+          marginBottom.value = String(parts[2]);
+          marginLeft.value = String(parts[3]);
+        }
+      }
+    }
+
+    sizeSel.addEventListener('change', () => { updateHash(); render(); });
+    spacingSel.addEventListener('change', () => { updateHash(); render(); });
+    orientSel.addEventListener('change', () => { updateHash(); render(); });
+    colorSel.addEventListener('change', () => { updateHash(); render(); });
+    themeSel.addEventListener('change', () => { updateHash(); render(); });
+    if (dotSizeSel) dotSizeSel.addEventListener('input', () => { updateHash(); render(); });
+    opacitySel.addEventListener('input', () => { updateHash(); render(); });
+    [marginTop, marginRight, marginBottom, marginLeft].forEach((el) => el.addEventListener('input', () => { updateHash(); render(); }));
+    btnReset.addEventListener('click', () => {
+      sizeSel.value = 'a4';
+      orientSel.value = 'portrait';
+      spacingSel.value = '5mm';
+      colorSel.value = defaultGridColor.id;
+      themeSel.value = defaultTheme.id;
+      if (dotSizeSel) dotSizeSel.value = '0.35';
+      opacitySel.value = '1';
+      marginTop.value = '10';
+      marginRight.value = '10';
+      marginBottom.value = '10';
+      marginLeft.value = '10';
+      updateHash();
+      render();
+    });
+    btnPrint.addEventListener('click', printGrid);
+    window.addEventListener('hashchange', () => { applyHash(); render(); });
+
+    applyHash();
+    render();
+  </script>
+</Base>

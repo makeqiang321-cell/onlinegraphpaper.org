@@ -1,0 +1,31 @@
+{
+  "name": "onlinegraphpaper",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "generate:assets": "tsx scripts/generate-assets.ts",
+    "generate:previews": "tsx scripts/generate-previews.ts",
+    "generate:icons": "tsx scripts/generate-icons.ts",
+    "check:assets": "tsx scripts/check-assets.ts",
+    "check:pdfsize": "tsx scripts/check-pdfsize.ts",
+    "check:paths": "tsx scripts/check-paths.ts",
+    "check:tdk": "tsx scripts/check-tdk.ts",
+    "check:copy": "tsx scripts/check-copy.ts",
+    "check:jsonld": "tsx scripts/check-jsonld.ts",
+    "check": "npm run check:assets && npm run check:pdfsize && npm run check:paths && npm run check:tdk && npm run check:copy && npm run check:jsonld"
+  },
+  "dependencies": {
+    "astro": "^5.1.0",
+    "pdf-lib": "^1.17.1",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  }
+}
