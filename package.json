@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "npm run generate:assets && npm run generate:previews",
     "build": "astro build",
     "preview": "astro preview",
     "generate:assets": "tsx scripts/generate-assets.ts",
