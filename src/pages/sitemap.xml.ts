@@ -1,11 +1,12 @@
 import type { APIRoute } from 'astro';
 import { paperTypes } from '../data/paperTypes';
+import { paperGroups } from '../content/paperGroups';
 
 export const GET: APIRoute = ({ site }) => {
   const base = (site ?? new URL('https://onlinegraphpaper.org')).toString().replace(/\/$/, '');
   const urls = [
     `  <url><loc>${base}/</loc></url>`,
-    ...['printable-graph-paper', 'privacy', ...paperTypes.map((t) => t.slug)].map(
+    ...['printable-graph-paper', 'privacy', ...paperGroups.map((g) => g.slug), ...paperTypes.map((t) => t.slug)].map(
       (p) => `  <url><loc>${base}/${p}/</loc></url>`
     ),
   ];
