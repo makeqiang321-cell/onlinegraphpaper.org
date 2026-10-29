@@ -50,12 +50,42 @@ const canonical = new URL(Astro.url.pathname, site);
         background: var(--bg);
         line-height: 1.6;
       }
-      main { max-width: 1080px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
-      h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em; margin: .25rem 0 .75rem; }
-      h2 { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.01em; margin: 3rem 0 .75rem; }
+      main { max-width: 1080px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+      h1 { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; margin: .4rem 0 1.1rem; }
+      h2 { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.02em; margin: 5rem 0 .75rem; scroll-margin-top: 5rem; }
       h3 { font-size: 1.02rem; font-weight: 650; }
       p { color: var(--muted); }
-      .lead { font-size: 1.15rem; max-width: 760px; }
+      .lead { font-size: 1.25rem; line-height: 1.55; max-width: 760px; }
+      .kicker { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--primary); margin: 4.5rem 0 .5rem; }
+      .kicker:first-child { margin-top: 0; }
+      .kicker + h2 { margin-top: 0; }
+      .hero-ctas { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.25rem; }
+      .hero-ctas .btn, .hero-ctas .btn-outline { margin: 0; }
+      .hero {
+        position: relative;
+        overflow: hidden;
+        border-radius: 24px;
+        padding: 4rem 2.5rem 4.5rem;
+        margin-bottom: 2.75rem;
+        border: 1px solid rgba(148, 163, 184, .22);
+        background-image:
+          linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px),
+          radial-gradient(900px 500px at 85% -20%, rgba(96, 165, 250, .5), transparent 60%),
+          radial-gradient(700px 460px at -10% 110%, rgba(59, 130, 246, .35), transparent 55%),
+          linear-gradient(135deg, #0b1220 0%, #172554 52%, #1e3a8a 100%);
+        background-size: 26px 26px, 26px 26px, auto, auto, auto;
+      }
+      .hero .kicker { color: #93c5fd; }
+      .hero h1 { color: #f8fafc; }
+      .hero .lead { color: #cbd5e1; }
+      .hero .btn { background: #f8fafc; border-color: #f8fafc; color: #0f172a; box-shadow: 0 12px 32px rgba(0, 0, 0, .35); }
+      .hero .btn:hover { background: #fff; border-color: #fff; color: #0f172a; }
+      .hero .btn-outline { background: transparent; border-color: rgba(255, 255, 255, .5); color: #f8fafc; }
+      .hero .btn-outline:hover { background: rgba(255, 255, 255, .12); color: #fff; }
+      .hero .crumbs { margin: 1.25rem 0 0; font-size: .85rem; color: #94a3b8; }
+      .hero .crumbs a { color: #93c5fd; }
+      .hero .crumbs a:hover { color: #fff; }
       strong { color: var(--text); }
       a { color: var(--primary); text-decoration: none; }
       a:hover { color: var(--primary-dark); }
@@ -101,7 +131,7 @@ const canonical = new URL(Astro.url.pathname, site);
       .btn-outline:hover { background: var(--primary-soft); color: var(--primary-dark); transform: translateY(-1px); }
       .controls .btn, .controls .btn-outline { margin: 0; }
 
-      .tool { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(15,23,42,.06); }
+      .tool { background: var(--surface); border: 1px solid var(--ring); border-radius: 18px; padding: 1.5rem; box-shadow: 0 0 0 1px rgba(37, 99, 235, .06), 0 2px 6px rgba(37, 99, 235, .08), 0 18px 50px rgba(37, 99, 235, .22); }
       .tool svg { width: 100%; height: auto; max-height: 72vh; border: 1px solid var(--border); border-radius: 8px; background: #fff; touch-action: none; display: block; }
       .controls { display: flex; gap: .75rem; flex-wrap: wrap; align-items: flex-end; margin: .25rem 0 .9rem; }
       .controls label { display: flex; flex-direction: column; gap: .3rem; font-size: .78rem; font-weight: 600; color: var(--faint); }

@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import { paperCatalog } from '../content/paperCatalog';
+import { paperGroups } from '../content/paperGroups';
+
+export function getStaticPaths() {
+  return paperGroups.map((g) => ({ params: { category: g.slug }, props: { group: g } }));
+}
+
+const { group } = Astro.props;
+const entries = paperCatalog.filter((e) => e.cat === group.key);
+
+const jsonLd = [
+  {
+    '@type': 'WebPage',
+    name: group.name,
+    url: `https://onlinegraphpaper.org/${group.slug}/`,
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://onlinegraphpaper.org/' },
+      { '@type': 'ListItem', position: 2, name: group.name, item: `https://onlinegraphpaper.org/${group.slug}/` },
+    ],
+  },
+];
+---
+
+<Base title={group.seoTitle} description={group.description}>
+  <script type="application/ld+json" is:inline slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
+
+  <main>
+    <section class="hero">
+      <span class="kicker">{group.title}</span>
+      <h1>{group.name}</h1>
+      <p class="lead">{group.intro}</p>
+      <p class="crumbs"><a href="/">Home</a> · <a href="/printable-graph-paper/">All graph paper types</a></p>
+    </section>
+
+    <span class="kicker">Catalog</span>
+    <h2>{group.name} templates</h2>
+    <div class="cards">
+      {entries.map((e) => (
+        <a class="card" href={e.href}>
+          <img class="thumb" src={`/images/previews/${e.id}.png`} alt={`${e.name} preview`} loading="lazy" />
+          <h3>{e.name}</h3>
+          <p>{e.desc}</p>
+        </a>
+      ))}
+    </div>
+
+    <p style="margin-top:1.5rem">Each {group.name} template above opens in the generator, so you can resize, recolor, and export it as a PDF, PNG, or SVG. Need more? Browse the full <a href="/printable-graph-paper/">printable graph paper</a> catalog.</p>
+  </main>
+</Base>

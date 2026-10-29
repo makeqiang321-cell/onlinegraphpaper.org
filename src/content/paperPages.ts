@@ -45,7 +45,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'How many squares are in a square grid?', a: 'It depends on the spacing. A 5 mm grid gives 42 squares across an A4 page and 59 down, about 2,478 squares in total; a 1 cm grid gives 21 across and 29 down. 5 mm is the standard for school maths.' },
       { q: 'Which square grid PDF size should I download?', a: 'A4 and Letter cover most home and classroom printing. Choose A3 or Tabloid when you need a larger sheet for technical drawings or posters.' },
       { q: 'How do I print a square grid PDF at the right scale?', a: 'Set your printer to 100% scale and turn off fit-to-page. Check that the paper size matches the one you picked, so each square prints at its true 5 mm, 1 cm or 0.25 in.' },
-      { q: 'Are these square grid downloads free?', a: 'Yes. All 84 square grid PDF, PNG and SVG files are free to download and print with no login and no watermark.' },
       { q: 'What is the difference between graph paper and grid paper?', a: 'They are two names for the same thing. Graph paper usually implies a square grid for plotting, while grid paper can also mean dot, hex or triangle grids.' },
     ],
     related: [
@@ -86,7 +85,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'What is blank staff paper used for?', a: 'Musicians and students use it to write melodies, harmonies, chords and guitar tablature by hand, and teachers use it for music theory exercises.' },
       { q: 'How many staves fit on one page?', a: 'A standard A4 sheet holds about 9 staves with enough space between them for lyrics or chord names.' },
       { q: 'Which paper size should I use for staff paper?', a: 'A4 and Letter are the easiest to print. Choose A3 or Tabloid if you want larger staves for young students or easier reading.' },
-      { q: 'Are these staff paper downloads free?', a: 'Yes. All staff paper PDF, PNG and SVG files are free to download and print with no login and no watermark.' },
       { q: 'Can I print staff paper with a clef already drawn?', a: 'These sheets are blank so you can add your own clef. Write a treble or bass clef at the start of each staff with a pen, or edit the SVG to add it before printing.' },
     ],
     related: [
@@ -127,7 +125,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'What is the standard dot spacing?', a: '5 mm is the most common, and 1 cm and 1/4 inch are also widely used. The spacing is the distance between the centres of two neighbouring dots.' },
       { q: 'Is dot grid paper the same as graph paper?', a: 'Not quite. Graph paper uses solid lines, while dot grid paper uses only the intersection points, so the page looks cleaner for writing and notes.' },
       { q: 'Can I print dot grid paper at home?', a: 'Yes. Download the PDF for your paper size and print at 100% scale so the dot spacing stays accurate.' },
-      { q: 'Are these dot grid downloads free?', a: 'Yes. All dot grid PDF, PNG and SVG files are free with no login and no watermark.' },
       { q: 'Can I draw straight lines on dot grid paper?', a: 'Yes. Line up a ruler between the dots to draw clean straight lines, or connect the dots by eye for quick boxes, charts and tables.' },
     ],
     related: [
@@ -168,7 +165,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'What angle is an isometric grid?', a: 'An isometric grid is made of three line families at 0°, 60° and 120°. On the page the diagonal families read as 30° lines, and the three families meet to form equilateral triangles.' },
       { q: 'Which spacing should I use for isometric drawing?', a: '5 mm and 1 cm are the most common. Use 5 mm for detailed sketches and 1 cm for diagrams or classroom work; 2 mm suits fine mechanical or PCB-style layouts.' },
       { q: 'Which paper size is best for isometric paper?', a: 'A4 and Letter cover most sketches and print on any home printer. Choose A3 or Tabloid when you need room for a large object or a full room layout.' },
-      { q: 'Are these isometric grid downloads free?', a: 'Yes. All 84 isometric PDF, PNG and SVG files are free to download and print with no login and no watermark.' },
       { q: 'Is isometric paper the same as triangle grid paper?', a: 'They use the same three line angles, so the cells look alike. Isometric paper is marketed for 3-D drawing, while triangle paper is used for flat geometric patterns and tessellations.' },
     ],
     related: [
@@ -184,7 +180,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'Polar paper plots by angle and radius rather than horizontal and vertical axes.',
       'A standard sheet draws a radial line every 15°, giving 24 spokes around the circle.',
-      'All polar downloads are free and print at true scale.',
+      'Concentric rings give you a built-in scale, so you can read a radius without measuring.',
     ],
     whatIs:
       'Polar graph paper is printed with concentric circles and lines that radiate from the centre, so you can plot data by angle and distance instead of X and Y. Engineers and scientists use it for radar charts, antenna patterns and anything measured in degrees. A standard sheet has circles every few millimetres and radial lines every 15°.',
@@ -209,7 +205,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'How is polar graph paper different from square graph paper?', a: 'Square paper uses a horizontal and vertical axis. Polar paper uses a centre point with rings and spokes, so each position is an angle plus a distance.' },
       { q: 'What angle are the radial lines on polar paper?', a: 'Most polar grids draw a radial line every 15°, giving 24 lines around the full circle, though denser and lighter options exist.' },
       { q: 'Which paper size should I use for polar graph paper?', a: 'A4 and Letter work for most plots and print on any home printer. Choose A3 when you need a larger diagram.' },
-      { q: 'Are these polar graph paper downloads free?', a: 'Yes. All polar PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'Can I print polar graph paper with numbered rings?', a: 'These sheets are blank so you can label the rings yourself. Number each ring by hand, or open the SVG and add the numbers before printing.' },
     ],
     related: [
@@ -225,7 +220,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'Semi-log paper has one logarithmic and one linear axis.',
       'Constant percentage growth becomes a straight line, so growth rates are easy to compare.',
-      'All semi-log downloads are free and print at true scale.',
+      'The log axis spans one to three decades, so it matches the range of your data.',
     ],
     whatIs:
       'Semi-log graph paper has one linear axis and one logarithmic axis, usually a linear horizontal axis and a log-scaled vertical axis. This layout turns exponential growth into a straight line, which makes growth rates easy to read. Scientists use it for population, bacterial growth and financial trends that grow by a fixed percentage.',
@@ -250,7 +245,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'What is the difference between semi-log and log-log paper?', a: 'Semi-log has one logarithmic axis and one linear axis. Log-log has logarithmic scales on both axes, for data that follows a power law.' },
       { q: 'Why does exponential data look straight on semi-log paper?', a: 'A logarithmic scale stretches small values and compresses large ones, so a constant percentage growth rate becomes a straight line that is easy to compare.' },
       { q: 'Which axis is logarithmic on semi-log paper?', a: 'Either can be, but the vertical axis is logarithmic on most printed sheets, while the horizontal axis stays linear.' },
-      { q: 'Are these semi-log downloads free?', a: 'Yes. All semi-log PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'What is a decade on a log scale?', a: 'A decade is a tenfold change, such as from 1 to 10 or from 10 to 100. Each decade takes up the same amount of space on a logarithmic axis.' },
     ],
     related: [
@@ -266,7 +260,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'Every hexagon has six equal sides and touches six neighbours at the same distance.',
       'The spacing controls the hexagon size, from fine 2 mm cells to large 1 in tiles.',
-      'All hex grid downloads are free and print at true scale.',
+      'Pointy-top and flat-top orientations cover tall and wide maps alike.',
     ],
     whatIs:
       'Hexagonal grid paper is printed with a honeycomb of regular hexagons that tile the page without gaps. Each hexagon has 6 sides, and the cells share edges so they pack tightly. Game designers, cartographers and chemists use hex grids for board maps, territory layouts and molecular sketches.',
@@ -291,7 +285,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'How many sides does each hexagon have?', a: 'Six. The cells are regular hexagons with six equal sides, and they tile the page so each cell touches six others.' },
       { q: 'Is hex grid paper the same as graph paper?', a: 'No. Graph paper uses squares, where diagonal neighbours are further than side neighbours. Hex grids keep all six neighbours at the same distance.' },
       { q: 'Which spacing should I use for a hex grid?', a: 'The spacing is roughly the size of one hexagon. Smaller values like 5 mm suit detailed maps, while 1 cm suits board game tiles.' },
-      { q: 'Are these hex grid downloads free?', a: 'Yes. All hexagonal grid PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'How do I measure the size of a hexagon?', a: 'Measure from the centre to any corner — that radius equals the length of one side. The spacing setting in the generator is roughly this radius, so a 5 mm setting gives hexagons about 5 mm per side.' },
     ],
     related: [
@@ -307,7 +300,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'The three line families run at 0°, 60° and 120°, forming 60° equilateral triangles.',
       'The cells pack evenly in every direction, so patterns repeat without gaps.',
-      'All triangle grid downloads are free and print at true scale.',
+      'Each triangle has three 60° angles, so patterns repeat without gaps or overlaps.',
     ],
     whatIs:
       'Triangle grid paper is printed with three families of lines that cross into a lattice of equilateral triangles. Every triangle has three equal sides and three 60° angles, so the cells pack evenly in every direction. Designers use it for tessellations, geometric patterns and 3-D sketches.',
@@ -332,7 +325,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'What angle are the lines on triangle grid paper?', a: 'The three line families run at 0°, 60° and 120°, so they meet to form equilateral triangles with 60° corners.' },
       { q: 'Is triangle grid paper the same as isometric grid paper?', a: 'They use the same three line angles, so the cells look alike. Isometric paper is labelled for 3-D drawing, while triangle paper is used for flat patterns.' },
       { q: 'Which spacing should I use for triangle grid paper?', a: '5 mm is standard for detailed work, and 1 cm suits larger tessellations and classroom geometry.' },
-      { q: 'Are these triangle grid downloads free?', a: 'Yes. All triangle grid PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'Can I draw 3-D sketches on triangle grid paper?', a: 'Yes. Because it uses the same 0°, 60° and 120° line families as isometric paper, you can sketch cubes and other 3-D objects along those three axes.' },
     ],
     related: [
@@ -348,7 +340,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'Wide-ruled paper spaces lines about 8 mm apart, narrow-ruled closer to 6 mm.',
       'A red left margin marks the start of the writing area.',
-      'All lined paper downloads are free and print at true scale.',
+      'Line spacing runs from 2 mm up to 1 inch, so you can match any handwriting.',
     ],
     whatIs:
       'Lined paper is printed with evenly spaced horizontal rules so handwriting stays straight, usually with a left margin line. The spacing between lines is what changes: wide-ruled paper has about 8 mm between lines, while narrow ruled is closer to 6 mm. Students and writers use it for notes, essays and practice.',
@@ -373,7 +365,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'What is lined paper used for?', a: 'It is used for handwriting, school notes, letters and essays, because the rules keep each line straight and evenly spaced.' },
       { q: 'Can I choose the line spacing?', a: 'Yes. You can pick from 2 mm up to 1 inch, so you get wide or narrow rules to match the handwriting.' },
       { q: 'Which paper size should I use for lined paper?', a: 'A4 and Letter are the standard school and office sizes and print on any home printer.' },
-      { q: 'Are these lined paper downloads free?', a: 'Yes. All lined paper PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'What is college-ruled paper?', a: 'College-ruled paper is the common US notebook ruling with lines about 7 mm apart and a red margin line on the left. It sits between wide-ruled and narrow-ruled in line spacing.' },
     ],
     related: [
@@ -389,7 +380,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'The X and Y axes cross at the origin (0, 0) and split the page into four quadrants.',
       'The axes are printed heavier than the grid so they stand out.',
-      'All coordinate plane downloads are free and print at true scale.',
+      'Quadrants are numbered counter-clockwise, and points are written as ordered pairs (x, y).',
     ],
     whatIs:
       'Coordinate plane paper is printed with a light square grid and two heavier lines that mark the X and Y axes through the centre. The axes split the page into four quadrants so you can plot points with coordinates. Algebra students use it to graph equations and functions, with the axes meeting at the origin (0, 0).',
@@ -414,7 +405,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'Where is the origin on a coordinate plane?', a: 'The origin is the point (0, 0) where the X and Y axes cross, usually in the centre of the page.' },
       { q: 'How many quadrants does a coordinate plane have?', a: 'Four. The X and Y axes divide the page into four quadrants, numbered counter-clockwise from the upper right.' },
       { q: 'Which spacing should I use for coordinate paper?', a: '5 mm gives a fine grid for detailed graphs, while 1 cm is easier to read for classroom work and larger scales.' },
-      { q: 'Are these coordinate plane downloads free?', a: 'Yes. All coordinate plane PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'Can I print a numbered coordinate plane?', a: 'These sheets are blank so you can number the axes yourself. Label each grid line by hand, or open the SVG and add the numbers before printing.' },
     ],
     related: [
@@ -430,7 +420,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'A full 1-100 grid has 10 rows of 10, with 100 cells in total.',
       'The layout makes skip-counting patterns, like multiples of 5, easy to see.',
-      'All number grid downloads are free and print at true scale.',
+      'Move right to add, left to subtract, and down to add ten — the grid doubles as a number line.',
     ],
     whatIs:
       'A number grid is a chart of the numbers 1 to 100 arranged in a 10 by 10 table, one number in each cell. Teachers print it so children can practise counting, skip-counting and spotting patterns like the multiples of 5 running down a column. The 10 columns and 10 rows make the sequence easy to follow.',
@@ -455,7 +445,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'How many numbers are on a number grid?', a: 'A full grid holds 100 numbers, from 1 to 100, arranged in 10 rows of 10.' },
       { q: 'Which size should I print for a number grid?', a: 'A4 and Letter are the standard classroom sizes. Choose A3 for a large wall chart or group work.' },
       { q: 'Can I use a number grid for skip counting?', a: 'Yes. The rows and columns make patterns easy to see, such as all multiples of 5 ending in 0 or 5.' },
-      { q: 'Are these number grid downloads free?', a: 'Yes. All number grid PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'Can I get a number grid that goes beyond 100?', a: 'This template covers 1 to 100. For a larger chart, print several pages and tape them together, or edit the SVG to extend the numbers.' },
     ],
     related: [
@@ -471,7 +460,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'A sudoku grid is 9 squares wide and 9 tall, with 81 cells in total.',
       'The bold lines mark the nine 3 by 3 boxes.',
-      'All sudoku downloads are free and print at true scale.',
+      'Blank grids leave room to pencil in candidates in each cell as you solve.',
     ],
     whatIs:
       'A sudoku grid is a 9 by 9 square divided into nine smaller 3 by 3 boxes, with 81 cells in total. Some cells are pre-filled as clues and the rest are left blank for the solver. The goal is to place the digits 1 to 9 so each row, column and box contains every digit exactly once.',
@@ -496,7 +485,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'What are the rules of sudoku?', a: 'Fill every row, column and 3 by 3 box with the digits 1 to 9, using each digit exactly once in each row, column and box.' },
       { q: 'What is a sudoku grid used for?', a: 'It is the board for sudoku puzzles, used for logic practice, classroom activities and printed puzzle books.' },
       { q: 'Which paper size should I print sudoku on?', a: 'A4 and Letter are standard. Choose A3 or Tabloid for larger cells that are easier to write in.' },
-      { q: 'Are these sudoku downloads free?', a: 'Yes. All sudoku grid PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'How many clues does a sudoku puzzle need?', a: 'A proper sudoku puzzle has exactly one solution. Well-formed puzzles usually have around 25 to 30 pre-filled clues, though the exact count depends on the puzzle design.' },
     ],
     related: [
@@ -512,7 +500,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'The standard layout has 4 columns and 10 rows with a header row.',
       'The header row is left blank so you can label each column yourself.',
-      'All blank table downloads are free and print at true scale.',
+      'Four columns cover most lists — date, item, quantity and notes.',
     ],
     whatIs:
       'A blank table is a sheet divided into rows and columns that you fill in with your own headings and data. A common layout has 4 columns and 10 rows, with a bold header row across the top. People print blank tables for schedules, checklists, inventories and simple spreadsheets on paper.',
@@ -537,7 +525,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'How many rows and columns does a blank table have?', a: 'The standard layout has 4 columns and 10 rows with a header row, though you can add or remove rows on the page.' },
       { q: 'Can I write my own headings?', a: 'Yes. The header row is left blank so you can label each column to match your data.' },
       { q: 'Which paper size should I use for a blank table?', a: 'A4 and Letter work for most lists and print on any printer. Choose A3 for a large wall chart.' },
-      { q: 'Are these blank table downloads free?', a: 'Yes. All blank table PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'Can I change the number of columns?', a: 'The template uses 4 columns. Rule extra vertical lines by hand, or open the SVG and add columns to match the data you need to track.' },
     ],
     related: [
@@ -553,7 +540,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'The cue column takes about a quarter of the page, the notes area the rest.',
       'The bottom summary strip holds a one-sentence recap of the page.',
-      'All Cornell notes downloads are free and print at true scale.',
+      'Cover the notes area and self-test from the cue column alone.',
     ],
     whatIs:
       'Cornell notes paper divides the page into three areas: a narrow cue column on the left, a wide notes area on the right, and a summary strip across the bottom. The standard layout uses about a third of the page for cues and the rest for notes. Students use it to take organised notes and to self-test by covering the notes column.',
@@ -578,7 +565,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'What are the three sections of a Cornell page?', a: 'A narrow cue column on the left, a wide notes area on the right, and a summary strip across the bottom of the page.' },
       { q: 'Why is there a cue column?', a: 'The cue column holds questions and keywords, so you can cover the notes and test yourself later from the cues alone.' },
       { q: 'Which paper size should I use for Cornell notes?', a: 'A4 and Letter are the most common. Letter is popular for US college note-taking, and A4 for international use.' },
-      { q: 'Are these Cornell notes downloads free?', a: 'Yes. All Cornell notes PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'How wide should the cue column be?', a: 'The cue column usually takes about a quarter to a third of the page width. This template uses roughly 26%, leaving the rest for notes and a strip at the bottom for the summary.' },
     ],
     related: [
@@ -594,7 +580,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'Both axes use logarithmic scales, so each equal step multiplies by ten.',
       'A power relationship plots as a straight line whose slope is the exponent.',
-      'All log-log downloads are free and print at true scale.',
+      'Both axes span one to three decades, covering several orders of magnitude.',
     ],
     whatIs:
       'Log-log graph paper has logarithmic scales on both axes, so each axis stretches small values and compresses large ones. It is used to plot data that follows a power law, because a power relationship becomes a straight line on log-log paper. Engineers use it for circuit design and physics for scaling relationships.',
@@ -619,7 +605,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'What is the difference between log-log and semi-log paper?', a: 'Log-log paper has logarithmic scales on both axes, while semi-log has one logarithmic and one linear axis.' },
       { q: 'Why does a power law look straight on log-log paper?', a: 'Both axes are logarithmic, so a relationship of the form y equals a power of x becomes a straight line whose slope is the exponent.' },
       { q: 'Which axis is logarithmic on log-log paper?', a: 'Both. The horizontal and vertical axes both use logarithmic scales.' },
-      { q: 'Are these log-log downloads free?', a: 'Yes. All log-log PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'What is a decade on a log scale?', a: 'A decade is a tenfold change, such as from 1 to 10 or from 100 to 1,000. Each decade occupies the same amount of space on a logarithmic axis.' },
     ],
     related: [
@@ -635,7 +620,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'The horizon line and vanishing point keep converging lines consistent.',
       'One-point perspective suits straight-on views, two-point suits angled views.',
-      'All perspective grid downloads are free and print at true scale.',
+      'Drawing edges toward the vanishing point makes a road or room narrow the way your eye expects.',
     ],
     whatIs:
       'Perspective grid paper is printed with a horizon line, a vanishing point and lines that converge toward it, so you can draw objects that recede into the distance. Artists and architects use one-point and two-point perspective grids to keep buildings, roads and rooms in proportion. The converging guides make depth read naturally.',
@@ -660,7 +645,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'What is a vanishing point?', a: 'It is the point on the horizon where parallel lines appear to meet as they move away from the viewer.' },
       { q: 'What is the difference between one-point and two-point perspective?', a: 'One-point perspective uses a single vanishing point for views straight on. Two-point perspective uses two vanishing points for objects seen at an angle.' },
       { q: 'Which paper size should I use for perspective drawing?', a: 'A4 and Letter suit most sketches, while A3 gives more room for full scenes and detailed buildings.' },
-      { q: 'Are these perspective grid downloads free?', a: 'Yes. All perspective grid PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'Can I print a two-point perspective grid?', a: 'This template uses a single central vanishing point. For a two-point layout, print two copies and combine them, or edit the SVG to add a second vanishing point.' },
     ],
     related: [
@@ -719,7 +703,7 @@ export const paperPages: Record<string, PaperPageContent> = {
     takeaways: [
       'The light grid stays faint so hand-drawn lines stand out.',
       'The title block in the corner holds the drawing name, scale, date and author.',
-      'All engineering paper downloads are free and print at true scale.',
+      'The grid runs 2 mm to 1 cm, matching the precision your drawing needs.',
     ],
     whatIs:
       'Engineering paper is printed with a light square grid, usually 5 mm or 0.25 inch, with a title block and border around the page. The grid stays faint so it does not compete with hand-drawn lines, and the title block holds the drawing name, scale and date. Engineers and students use it for technical sketches and lab work.',
@@ -744,7 +728,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { q: 'What is the grid spacing on engineering paper?', a: 'The light grid is usually 5 mm or 0.25 inch, and the lines are printed faint so hand-drawn lines stand out.' },
       { q: 'What is a title block?', a: 'It is a boxed area, usually in the corner of the sheet, where you record the drawing name, scale, date and who drew it.' },
       { q: 'Which paper size should I use for engineering paper?', a: 'A4 and Letter are standard for lab and coursework, while A3 suits larger technical drawings.' },
-      { q: 'Are these engineering paper downloads free?', a: 'Yes. All engineering PDF, PNG and SVG files are free to download and print with no login.' },
       { q: 'What should I write in the title block?', a: 'Record the drawing title, scale, date and your name. For coursework, also add the course or project name so the sheet is easy to identify.' },
     ],
     related: [

@@ -7,6 +7,7 @@ const titles: string[] = [];
 for (const f of walk('dist', /\.html$/)) {
   const html = readFileSync(f, 'utf8');
   if (/http-equiv=["']refresh/.test(html)) continue; // redirect stub, not a content page
+  if (/google[0-9a-f]+\.html$/.test(f)) continue; // Google Search Console verification file
   const title = html.match(/<title[^>]*>(.*?)<\/title>/is)?.[1]?.trim() ?? '';
   const desc =
     html.match(/<meta[^>]*name=["']description["'][^>]*content=["'](.*?)["']/is)?.[1]?.trim() ?? '';

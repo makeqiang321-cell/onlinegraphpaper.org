@@ -7,13 +7,15 @@ const N = 8;
 
 function extractBody(html: string): string {
   const body = html.match(/<body[^>]*>([\s\S]*)<\/body>/i)?.[1] ?? '';
-  return body
-    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .toLowerCase();
+  return stripQuestions(
+    body
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
+      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase()
+  );
 }
 
 function ngrams(text: string, n: number): Set<string> {
@@ -25,11 +27,21 @@ function ngrams(text: string, n: number): Set<string> {
   return out;
 }
 
+// FAQ questions are shared search queries (targeted long-tails), not copyable prose.
+const stripQuestions = (t: string) => t.replace(/[^.!?]*\?/g, ' ');
+
 const refDir = 'reference';
 const refGrams = new Set<string>();
 if (existsSync(refDir)) {
   for (const f of readdirSync(refDir)) {
-    const text = readFileSync(join(refDir, f), 'utf8').toLowerCase();
+    const text = stripQuestions(
+      readFileSync(join(refDir, f), 'utf8')
+        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
+        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .toLowerCase()
+    );
     for (const g of ngrams(text, N)) refGrams.add(g);
   }
 }

@@ -80,8 +80,12 @@ const jsonLd = [
   <script type="application/ld+json" is:inline slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
 
   <main data-paper-type={type.slug}>
-    <h1>{type.name}</h1>
-    <p class="lead">{content.intro}</p>
+    <section class="hero">
+      <span class="kicker">Free · No signup · No watermark</span>
+      <h1>{type.name}</h1>
+      <p class="lead">{content.intro}</p>
+      <p class="crumbs"><a href="/">Home</a> · <a href="/printable-graph-paper/">All graph paper types</a></p>
+    </section>
 
     <section class="takeaways" aria-label="Key takeaways">
       <h2>Key takeaways</h2>
@@ -89,7 +93,6 @@ const jsonLd = [
         {content.takeaways.map((t) => <li>{t}</li>)}
       </ul>
     </section>
-    <p class="crumbs"><a href="/">Home</a> · <a href="/printable-graph-paper/">All graph paper types</a></p>
 
     <section class="gen" aria-label={`${type.name} generator`}>
       <div class="gen-steps">

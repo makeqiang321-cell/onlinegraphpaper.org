@@ -1,51 +1,52 @@
 ---
 import Base from '../layouts/Base.astro';
 import { paperCatalog } from '../content/paperCatalog';
+import { paperGroups } from '../content/paperGroups';
 
 const title = 'Online Graph Paper Generator — Free PDF, PNG & SVG';
 const description =
-  'Free online graph paper generator. Draw on graph paper in your browser, download print-ready PDF, PNG & SVG in A4, Letter, A3 and Legal, 2mm–1in spacing.';
+  'Free online graph paper generator. Draw on graph paper in your browser, then download print-ready PDF, PNG or SVG in A4, Letter, A3 and Legal.';
 
 const faq = [
   {
     q: 'What is an online graph paper generator?',
-    a: 'An online graph paper generator — also called a graph paper maker — is a free browser tool that draws a grid you can edit on screen. Pick a paper size, spacing and orientation, sketch on the grid, then export your work as a print-ready PDF, PNG or SVG.',
+    a: 'An online graph paper generator is a browser tool that draws a grid you can download and print. You pick the paper size and spacing, sketch on the grid if you need to, and export a print-ready PDF, PNG, or SVG — no install, no signup, and no watermark.',
   },
   {
     q: 'Can I download graph paper as a PDF?',
-    a: 'Yes. Every template on this site downloads as a print-ready PDF, plus PNG and SVG versions, with no sign-up.',
+    a: 'Yes. Set the paper size and spacing you want, then choose Download PDF. The file is print-ready, so a 5 mm grid stays 5 mm when you print it at 100% scale.',
   },
   {
     q: 'Is this graph paper free?',
-    a: 'Yes. All tools and downloads are free, with no login, no watermark and no download limit.',
+    a: 'Yes. Every size, spacing, and format is free, with no watermark, no login, and no download limit. Use it for school, work, or commercial projects at no cost.',
   },
   {
     q: 'How big are the squares on graph paper?',
-    a: 'Common square sizes are 5 mm, 1 cm, 1/4 inch and 1/2 inch. 5 mm is the standard for school maths, and 1/4 inch matches US rulers.',
+    a: 'You choose the square size from six spacings, from 2 mm up to 1 inch. A 5 mm square is the common choice for school work, and a 1/4 inch square (about 6.35 mm) matches US letter notebooks.',
   },
   {
     q: 'How do I print graph paper at the correct size?',
-    a: 'Print at 100% scale or actual size, and turn off fit-to-page, so each square keeps its true 5 mm or 1/4 inch measurement.',
+    a: 'In the print dialog, set the scale to Actual size or 100% and turn off Fit to page. That prints a 5 mm square at 5 mm; Fit to page shrinks it to about 4.6 mm.',
   },
   {
     q: 'Is quad ruled paper the same as graph paper?',
-    a: 'Yes. Quad ruled paper is square grid paper with four squares per inch, also called 4x4 or 1/4 inch graph paper.',
+    a: 'They are close, but not identical. Quad ruled paper is graph paper with four squares per inch, while graph paper can use any spacing. Every quad ruled sheet is graph paper, but not every graph paper sheet is quad ruled.',
   },
   {
     q: 'Which graph paper template should I choose?',
-    a: 'Use square grid for general maths, dot grid for notes and journaling, isometric for 3D sketches, and semi-log or polar for science plots.',
+    a: 'Pick by the task: a coordinate plane for plotting, an isometric grid for 3D sketches, or a plain square grid for arithmetic and notes. Each one opens in the same graph paper tool, so your size and spacing stay put.',
   },
   {
-    q: 'Can I change the size, spacing and colour?',
-    a: 'Yes. Pick any paper size from A4 to Poster, six spacings from 2 mm to 1 in, and a blue, gray or green grid.',
+    q: 'Can I change the size, spacing, and color?',
+    a: 'Yes. Change the paper size, the spacing between lines, and the grid color — blue, gray, or green — before you export. The preview updates as you change each one.',
   },
   {
     q: 'Can I use the online graph paper generator without signing up?',
-    a: 'Yes. It runs in your browser with no account and no watermark.',
+    a: 'Yes. There is no account to create and nothing to install. Open the page, draw, and download; the generator never asks for an email address.',
   },
   {
     q: 'Does the online graph paper generator work on a phone?',
-    a: 'Yes. It is responsive and works on any device with a browser.',
+    a: 'Yes. It runs in a browser, so it works on a phone, tablet, or desktop at any screen width, and the drawing tools respond to touch as well as a mouse.',
   },
 ];
 
@@ -72,37 +73,67 @@ const jsonLd = [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://onlinegraphpaper.org/' },
     ],
   },
+  {
+    '@type': 'Organization',
+    name: 'Online Graph Paper',
+    url: 'https://onlinegraphpaper.org/',
+    logo: { '@type': 'ImageObject', url: 'https://onlinegraphpaper.org/apple-touch-icon.png' },
+  },
+  {
+    '@type': 'WebSite',
+    name: 'Online Graph Paper',
+    url: 'https://onlinegraphpaper.org/',
+  },
 ];
 
-const ready = [
-  { label: 'A4 · Portrait · 5mm', name: 'A4 5mm Graph Paper', desc: 'The standard maths and notebook grid.', file: 'a4-portrait-5mm' },
-  { label: 'Letter · Portrait · 0.25in', name: 'Letter 1/4 Inch Graph Paper', desc: 'The common US classroom and office grid.', file: 'letter-portrait-0.25in' },
-  { label: 'A4 · Portrait · 1cm', name: 'A4 1cm Graph Paper', desc: 'Wider squares for early counting and big diagrams.', file: 'a4-portrait-1cm' },
-  { label: 'Letter · Portrait · 5mm', name: 'Letter 5mm Graph Paper', desc: 'A fine grid on US Letter for detailed work.', file: 'letter-portrait-5mm' },
+const axesModes = [
+  {
+    mode: 'Graph paper with axes',
+    desc: 'two labeled lines cross the grid, so you can read the x and y value of any point.',
+    img: '/images/previews/coordinate-plane.png',
+    alt: 'a grid with a labeled x-axis and y-axis crossing at the origin',
+    task: 'Plot a function or equation and see exactly where it crosses each axis, instead of estimating the position from an unlabeled grid.',
+    who: 'Students graphing lines and curves, and math teachers who build worksheets.',
+  },
+  {
+    mode: 'Numbered graph paper',
+    desc: 'every grid line carries its number along the edge of the sheet.',
+    img: '/images/previews/number-grid.png',
+    alt: 'numbers running along the top and left edges of the grid',
+    task: 'Mark a point at an exact coordinate pair and check the answer against the numbers already printed on the grid.',
+    who: 'Students learning to plot coordinates, and parents checking the homework.',
+  },
+  {
+    mode: 'Four quadrant graph paper',
+    desc: 'the origin sits in the middle of the sheet, so negative and positive values share one grid.',
+    img: '/images/previews/coordinate-plane.png',
+    alt: 'all four quadrants with the origin placed in the center',
+    task: 'Plot points and shapes that cross into negative x or y values, which a single-quadrant grid cannot show at all.',
+    who: 'Middle and high school students in algebra and pre-algebra, and their teachers.',
+  },
 ];
 
-const cats = [
-  { key: 'popular', title: 'Popular' },
-  { key: 'graph', title: 'Graph' },
-  { key: 'learning', title: 'Learning' },
-  { key: 'drawing', title: 'Drawing' },
-  { key: 'writing', title: 'Writing & Technical' },
-] as const;
 ---
 
 <Base title={title} description={description}>
   <script type="application/ld+json" is:inline slot="jsonld" set:html={JSON.stringify(jsonLd)}></script>
 
   <main>
-    <h1>Online Graph Paper Generator</h1>
-    <p class="lead">
-      This online graph paper generator turns any paper size into a clean, printable grid, from 5 mm
-      and 1/4 inch squares up to 1 cm. Draw on the grid in your browser, then download a print-ready
-      PDF, PNG or SVG. Isometric, semi-log, dot grid, coordinate and lined paper are built to true
-      scale by the same online graph paper maker, with no login and no watermark.
-    </p>
+    <section class="hero">
+      <span class="kicker">Free · No signup · No watermark</span>
+      <h1>Online Graph Paper Generator</h1>
+      <p class="lead">
+        Draw online graph paper directly in your browser, then export the exact sheet you drew. Sketch
+        on the grid, set the line spacing, add axes and numbers, and download the result as a
+        print-ready PDF, PNG, or SVG. There is nothing to install, and no login or watermark.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn" href="#tool">Start drawing</a>
+        <a class="btn-outline" href="/printable-graph-paper/">Browse paper types</a>
+      </div>
+    </section>
 
-    <section class="tool" aria-label="Online graph paper canvas">
+    <section class="tool" id="tool" aria-label="Online graph paper canvas">
       <div class="controls">
         <label>
           Size
@@ -132,128 +163,163 @@ const cats = [
       <p style="font-size:.9rem;margin:.4rem 0 0">Use this graph paper maker to sketch on the grid above, then export the result.</p>
     </section>
 
-    <h2>Ready-to-print graph paper</h2>
-    <p>
-      Start with a finished sheet when a standard grid already fits. Every PDF is generated at true
-      print scale, so the file you download matches the preview from the online graph paper maker.
-      These four are the defaults most people reach for, and each one opens in the online graph paper
-      generator when you need more control.
-    </p>
-    <div class="cards">
-      {ready.map((r) => (
-        <div class="card">
-          <small>{r.label}</small>
-          <h3>{r.name}</h3>
-          <p>{r.desc}</p>
-          <a class="btn" href={`/downloads/square-grid/${r.file}.pdf`} download>Download PDF</a>
-          <a class="btn-outline" href="/square-grid/">Open template →</a>
-        </div>
-      ))}
-    </div>
-    <p>
-      Need a different size, spacing or orientation? Change it in the online graph paper generator — <a class="btn-outline" href="/printable-graph-paper/">Browse all paper templates →</a>
-    </p>
+    <section aria-label="Graph paper with axes, numbers, and four quadrants">
+      <span class="kicker">Capabilities</span>
+      <h2>Graph Paper with Axes, Numbers, and Four Quadrants</h2>
+      <p>
+        Blank grids are everywhere. What most graph paper tools skip is the coordinate layer — axes,
+        numbered lines, and four quadrants. These three modes of online graph paper turn a plain grid
+        into something you can plot on, with the origin and the numbers already marked.
+      </p>
+      <table style="width:100%;border-collapse:collapse;margin-top:1rem">
+        <thead>
+          <tr style="text-align:left;border-bottom:2px solid var(--border)">
+            <th style="padding:.5rem">Mode</th>
+            <th style="padding:.5rem">What it solves</th>
+            <th style="padding:.5rem">Who searches</th>
+          </tr>
+        </thead>
+        <tbody>
+          {axesModes.map((m) => (
+            <tr style="border-bottom:1px solid var(--border);vertical-align:top">
+              <td style="padding:.6rem;min-width:210px">
+                <img src={m.img} alt={m.alt} loading="lazy" style="width:120px;display:block;border:1px solid var(--border);border-radius:6px;margin-bottom:.4rem" />
+                <strong>{m.mode}</strong> — {m.desc}
+              </td>
+              <td style="padding:.6rem;color:var(--muted)">{m.task}</td>
+              <td style="padding:.6rem;color:var(--muted)">{m.who}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p>
+        These three modes of online graph paper share one graph paper tool, so the paper size, spacing, and
+        export format stay the same whether you need axes, numbers, or all four quadrants. Pick a
+        mode, set the size and spacing, then download the finished sheet as a PDF, PNG, or SVG.
+      </p>
+    </section>
 
-    <section id="paper-types" aria-label="Paper type catalog" style="margin-top:2.5rem">
-      <h2>Paper type catalog</h2>
-      <p>Pick the paper type that matches your task, then set the size, spacing and colour in the online graph paper generator.</p>
-      {cats.map((cat) => (
-        <div style="margin-top:2rem">
-          <h3>{cat.title}</h3>
-          <div class="cards">
-            {paperCatalog.filter((e) => e.cat === cat.key).map((e) =>
-              e.href ? (
+    <section aria-label="Will the grid print at the exact size">
+      <span class="kicker">True size</span>
+      <h2>Will the Grid Print at the Exact Size?</h2>
+      <p>Online graph paper only prints at its true size if the print dialog is set to do it.</p>
+      <p>
+        In the print dialog, set the scale to <strong>Actual size</strong> or <strong>100%</strong>.
+        If the dialog shows a page-scaling option, set it to <strong>None</strong>, and turn off
+        <strong>Fit to page</strong> or <strong>Shrink to fit</strong>. These two choices decide
+        whether the grid prints at the size you set or at a size the printer picked.
+      </p>
+      <p>
+        With <strong>Actual size</strong> selected, a 5 mm square prints at 5 mm on paper. Line to
+        line, the printed spacing matches a ruler, so the sheet keeps the size you chose.
+      </p>
+      <p>
+        With <strong>Fit to page</strong> selected, the same square comes out smaller. A 5 mm grid
+        drops to about 4.6 mm, because the browser squeezes the whole sheet to clear the printer
+        margins. Every square shrinks by the same ratio, so the grid still looks even, but it no
+        longer matches the number you set.
+      </p>
+      <p>Before you print a batch, print one test page and measure a single square with a ruler.</p>
+    </section>
+
+    <section aria-label="How to use the online graph paper">
+      <span class="kicker">Process</span>
+      <h2>How to Use the Online Graph Paper</h2>
+      <p>Three steps carry a blank grid to a sheet of online graph paper.</p>
+      <ol>
+        <li><strong>Choose a paper size</strong> from the list. The grid redraws at the size you picked, so what you see is what will print.</li>
+        <li><strong>Set the spacing</strong> between grid lines, then switch the axis and numbers on or off. Each change appears in the preview right away.</li>
+        <li><strong>Export</strong> the finished sheet as a PDF, PNG, or SVG, then print it or save it to your device.</li>
+      </ol>
+    </section>
+
+    <section id="paper-types" aria-label="Paper type catalog">
+      <span class="kicker">Catalog</span>
+      <h2>Paper Types</h2>
+      <p>
+        Every type of online graph paper lives here in four groups — math, music, drawing, and
+        writing — so you can jump to the grid your task needs instead of scrolling one long list.
+        Each card opens in the same graph paper tool, ready to draw on.
+      </p>
+      {paperGroups.map((g) => {
+        const all = paperCatalog.filter((e) => e.cat === g.key);
+        const shown = g.show.map((id) => all.find((e) => e.id === id)!);
+        return (
+          <div style="margin-top:2rem">
+            <h3>{g.title}</h3>
+            <div class="cards">
+              {shown.map((e) => (
                 <a class="card" href={e.href}>
                   <img class="thumb" src={`/images/previews/${e.id}.png`} alt={`${e.name} preview`} loading="lazy" />
                   <h3>{e.name}</h3>
                   <p>{e.desc}</p>
-                  <div class="tags">{e.tags.map((t) => <span>{t}</span>)}</div>
                 </a>
-              ) : (
-                <div class="card">
-                  <img class="thumb" src={`/images/previews/${e.id}.png`} alt={`${e.name} preview`} loading="lazy" />
-                  <h3>{e.name}</h3>
-                  <p>{e.desc}</p>
-                  <div class="tags">{e.tags.map((t) => <span>{t}</span>)}</div>
-                </div>
-              )
-            )}
+              ))}
+            </div>
+            <p><a href={`/${g.slug}/`}>View all {all.length} {g.title} templates →</a></p>
           </div>
-        </div>
-      ))}
-      <p>Every template opens in the online graph paper generator, where you can change its size, spacing and colour before downloading.</p>
+        );
+      })}
+      <p>Every entry opens in the same graph paper tool, where you can change the size, spacing, and color before you download.</p>
     </section>
 
-    <section aria-label="How the online graph paper generator works" style="margin-top:2.5rem">
-      <h2>How the online graph paper generator works</h2>
-      <p>
-        The online graph paper generator draws every grid as vector lines, so a 5 mm square prints at
-        exactly 5 mm. Choose a paper size, spacing and orientation, then export the result as PDF, PNG or SVG.
-      </p>
-      <p>
-        It runs entirely in your browser, so nothing you draw is uploaded. Use the online graph paper
-        generator on a phone, tablet or desktop — no account and no watermark.
-      </p>
-      <p>
-        Every setting — paper size, spacing, colour, dot size and margins — is adjustable, so this
-        graph paper maker covers far more than a fixed set of PDFs.
-      </p>
-    </section>
-
-    <section aria-label="Find the right graph paper" style="margin-top:2.5rem">
-      <h2>Find the right graph paper for the job</h2>
-      <p>
-        Most people do not need to think about every setting first. Start from the task in front of
-        you, then adjust the sheet in the graph paper maker.
-      </p>
+    <section aria-label="Match the grid to the task">
+      <span class="kicker">Choose by use</span>
+      <h2>Match the Grid to the Task</h2>
+      <p>Start from the task in front of you, and the right online graph paper is already here.</p>
       <div class="cards">
         <div class="card">
-          <h3>Math class</h3>
-          <p>Start with 5 mm square grid or coordinate plane paper for plotting, tables and diagrams.</p>
-          <a href="/square-grid/">Open template →</a>
+          <h3>Plot a function</h3>
+          <p>Square or coordinate-plane paper gives you labeled axes, so each point lands where the x and y numbers say it should.</p>
+          <a href="/coordinate-plane/">Open template →</a>
         </div>
         <div class="card">
-          <h3>Journaling</h3>
-          <p>Use dot grid or lined paper when you want structure without heavy printed lines.</p>
-          <a href="#paper-types">Open template →</a>
+          <h3>Take notes</h3>
+          <p>A dot grid or ruled lines adds structure that stays light under handwriting and does not fight the pen.</p>
+          <a href="/dot-grid/">Open template →</a>
         </div>
         <div class="card">
-          <h3>Technical drawing</h3>
-          <p>Pick isometric, hex or engineering-style grids for objects, maps, layouts and plans.</p>
+          <h3>Draw an isometric sketch</h3>
+          <p>A 30° grid keeps every edge on one of the three visible faces, so the depth stays believable.</p>
           <a href="/isometric-grid/">Open template →</a>
         </div>
         <div class="card">
-          <h3>Science plots</h3>
-          <p>Use polar and semi-log paper for angle work, circular data and growth curves.</p>
-          <a href="#paper-types">Open template →</a>
+          <h3>Plot science data</h3>
+          <p>Polar or semi-log axes fit the numbers when they follow an angle or a growth curve instead of a straight line.</p>
+          <a href="/semi-log/">Open template →</a>
         </div>
       </div>
-      <p>Each starting point opens in the online graph paper generator with sensible defaults, ready to print or tweak.</p>
+      <p>Each task opens the matching grid, ready to resize, print, or export.</p>
     </section>
 
-    <h2>Make the printed grid come out right</h2>
-    <p>
-      A grid is only useful when the printed scale is predictable. Every PDF from the online graph
-      paper generator is built for a real paper size, but the print dialog still controls the final result.
-    </p>
-    <ol>
-      <li><strong>Use 100% scale</strong> — pick "actual size" and turn off fit-to-page, which shrinks or stretches the grid.</li>
-      <li><strong>Match the paper size</strong> — set the PDF to the sheet you loaded (A4, Letter or the size you picked) so lines land where you expect.</li>
-      <li><strong>Print one test page</strong> — measure one square (a 5 mm square should be exactly 5 mm) before printing a full worksheet set.</li>
-      <li><strong>Re-check the scale</strong> — if a square measures wrong, adjust the settings in the online graph paper generator and download again.</li>
-    </ol>
+    <section aria-label="What this tool cannot do">
+      <span class="kicker">Limits</span>
+      <h2>What This Graph Paper Tool Can't Do</h2>
+      <p>Three limits are worth knowing before you rely on the graph paper tool.</p>
+      <ol>
+        <li>The canvas does not save itself. Close the tab or reload the page, and anything you drew but did not export is gone. Export the file before you leave if the sketch matters.</li>
+        <li>The graph paper tool cannot read a photo. Point your camera at a printed sheet and it will not come back as an editable grid, so keep the exported file if you plan to edit it again.</li>
+        <li>The graph paper tool cannot guarantee printer margins. Each printer and driver decides its own printable area, so the grid may sit a few millimeters from the paper edge, or closer than the preview shows.</li>
+      </ol>
+    </section>
 
-    <h2 id="faq">FAQ</h2>
-    <p>
-      Practical answers about the online graph paper generator, printable PDFs, grid spacing, quad
-      ruled paper and printing at the right size.
-    </p>
+    <span class="kicker">Questions</span>
+    <h2 id="faq">Frequently Asked Questions</h2>
+    <p>Answers to common questions about the online graph paper generator: what it is, downloading, printing at the right size, square sizes, and whether it is free.</p>
     {faq.map((f) => (
       <div class="faq-item">
         <h3>{f.q}</h3>
         <p>{f.a}</p>
       </div>
     ))}
+
+    <p>
+      If you already know which sheet you need, go straight to it: browse the full set of
+      <a href="/printable-graph-paper/">printable graph paper</a> templates, open a
+      <a href="/coordinate-plane/">coordinate plane</a> for plotting, or start an
+      <a href="/isometric-grid/">isometric grid</a> for 3D sketches. Each one loads in the same
+      graph paper tool, so the size, spacing, and export controls stay the same.
+    </p>
 
     <footer>
       <p>All generated PDF files are free for personal, educational and commercial use.</p>
