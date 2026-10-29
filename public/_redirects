@@ -1,0 +1,4 @@
+# True HTTP 301s at the Cloudflare edge. Astro's meta-refresh stubs remain as a local-dev fallback.
+/english/ /staff-paper/ 301
+/semi-log-graph-paper/ /semi-log/ 301
+/graph-paper-generator/ / 301
