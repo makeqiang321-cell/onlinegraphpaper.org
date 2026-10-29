@@ -663,49 +663,6 @@ export const paperExtras: Record<string, PaperExtra> = {
       { base: 'a4-portrait-1cm', caption: 'A4 perspective grid for room sketches' },
     ],
   },
-  english: {
-    applications: [
-      {
-        h3: 'Songwriting',
-        items: [
-          { text: 'Sketch a verse and chorus as a lead sheet' },
-          { text: 'Add chord symbols above the melody line' },
-          { text: 'Rewrite a lyric under each phrase' },
-        ],
-      },
-      {
-        h3: 'Chord charts',
-        items: [
-          { text: 'Map a chord progression bar by bar' },
-          { text: 'Mark the key and time signature at the top' },
-          { text: 'Notate a turnaround or key change' },
-        ],
-      },
-      {
-        h3: 'Sharing and rehearsing',
-        items: [
-          { text: 'Print one copy per band member' },
-          { text: 'Pass out clean charts at rehearsal' },
-          { text: 'Save the PDF to share with collaborators' },
-        ],
-      },
-    ],
-    comparison: {
-      aLabel: 'Printed at home',
-      bLabel: 'Bought manuscript notebook',
-      rows: [
-        { feature: 'Cost', a: 'Free, unlimited copies', b: 'Paid per notebook' },
-        { feature: 'Layout', a: 'Any of 7 paper sizes', b: 'Fixed to the notebook' },
-        { feature: 'Reprinting', a: 'Print a fresh sheet anytime', b: 'Buy a new notebook' },
-        { feature: 'Best for', a: 'Flexible practice and drafts', b: 'A bound, portable log' },
-      ],
-    },
-    gallery: [
-      { base: 'a4-portrait-5mm', caption: 'A4 printable staff paper — blank staves for notation' },
-      { base: 'letter-portrait-0.25in', caption: 'Letter staff paper — US music sheet size' },
-      { base: 'a3-portrait-5mm', caption: 'A3 staff paper — larger staves for young students' },
-    ],
-  },
   engineering: {
     applications: [
       {

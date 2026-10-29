@@ -121,13 +121,6 @@ export const paperTypes: PaperType[] = [
       'Free printable perspective grid paper with a horizon and converging guides. Download perspective grids in 7 sizes as PDF, PNG or SVG for drawing depth.',
   },
   {
-    slug: 'english',
-    name: 'Printable Staff Paper',
-    title: 'Printable Staff Paper — Free PDF, PNG & SVG',
-    description:
-      'Free printable staff paper for songwriting. Download blank five-line staves in 7 sizes as PDF, PNG or SVG to build lead sheets with melody, chords and lyrics.',
-  },
-  {
     slug: 'engineering',
     name: 'Engineering Paper',
     title: 'Engineering Paper — Free Printable PDF, PNG & SVG',

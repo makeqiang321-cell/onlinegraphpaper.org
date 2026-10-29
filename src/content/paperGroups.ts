@@ -30,8 +30,8 @@ export const paperGroups: PaperGroup[] = [
     name: 'Music Paper',
     seoTitle: 'Music Paper — Free Printable Staff Paper PDF',
     description: 'Free printable music paper and staff paper for notation, lead sheets and songwriting. Blank staves you can print as PDF, PNG or SVG.',
-    intro: 'Music paper is blank staff paper for handwriting music. One layout is for general notation and tab, the other for lead sheets and songwriting; both print and export like the rest of the catalog.',
-    show: ['staff-paper', 'english'],
+    intro: 'Music paper is blank staff paper for handwriting music — five-line staves for notation, guitar tab, lead sheets and songwriting, ready to print and export like the rest of the catalog.',
+    show: ['staff-paper'],
   },
   {
     key: 'drawing',

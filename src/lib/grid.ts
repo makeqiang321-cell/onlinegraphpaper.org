@@ -105,8 +105,7 @@ export function gridPrims(type: string, w: number, h: number, s: number, dotSize
       line(w - 45, h - 25, w - 45, h);
       line(w - 70, h - 15, w, h - 15);
       break;
-    case 'staff-paper':
-    case 'english': {
+    case 'staff-paper': {
       const margin = 14;
       const gap = 2.4;
       const pitch = 30;

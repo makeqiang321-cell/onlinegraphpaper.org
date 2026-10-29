@@ -20,7 +20,6 @@ export const paperCatalog: CatalogEntry[] = [
   { id: 'sudoku', name: 'Sudoku Grid', desc: 'Print-ready blank 9 × 9 grids', tags: ['Puzzles', 'Logic', 'PDF'], cat: 'math', href: '/sudoku/' },
   // Music
   { id: 'staff-paper', name: 'Staff Paper', desc: 'Blank music staves for notation and tab', tags: ['Music', 'Notation', 'Hobby'], cat: 'music', href: '/staff-paper/' },
-  { id: 'english', name: 'Printable Staff Paper', desc: 'Blank staves for lead sheets and songwriting', tags: ['Music', 'Notation', 'PDF'], cat: 'music', href: '/english/' },
   // Drawing
   { id: 'dot-grid', name: 'Dot Grid', desc: 'Minimal dots for journals and sketching', tags: ['Journaling', 'Design', 'Sketching'], cat: 'drawing', href: '/dot-grid/' },
   { id: 'isometric-grid', name: 'Isometric Grid', desc: '30° grid for 3D and technical drawing', tags: ['3D Drawing', 'Architecture', 'Design'], cat: 'drawing', href: '/isometric-grid/' },

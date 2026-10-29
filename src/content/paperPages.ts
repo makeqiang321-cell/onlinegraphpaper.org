@@ -90,7 +90,6 @@ export const paperPages: Record<string, PaperPageContent> = {
     related: [
       { href: '/square-grid/', text: 'Square Grid' },
       { href: '/lined-paper/', text: 'Lined Paper' },
-      { href: '/english/', text: 'Printable Staff Paper' },
       { href: '/cornell/', text: 'Cornell Notes Paper' },
     ],
   },
@@ -370,7 +369,6 @@ export const paperPages: Record<string, PaperPageContent> = {
     related: [
       { href: '/dot-grid/', text: 'Dot Grid Paper' },
       { href: '/cornell/', text: 'Cornell Notes Paper' },
-      { href: '/english/', text: 'Printable Staff Paper' },
       { href: '/staff-paper/', text: 'Staff Paper' },
     ],
   },
@@ -451,7 +449,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { href: '/coordinate-plane/', text: 'Coordinate Plane Paper' },
       { href: '/blank-table/', text: 'Blank Table' },
       { href: '/sudoku/', text: 'Sudoku Grid' },
-      { href: '/english/', text: 'Printable Staff Paper' },
     ],
   },
   sudoku: {
@@ -571,7 +568,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { href: '/lined-paper/', text: 'Lined Paper' },
       { href: '/dot-grid/', text: 'Dot Grid Paper' },
       { href: '/blank-table/', text: 'Blank Table' },
-      { href: '/english/', text: 'Printable Staff Paper' },
     ],
   },
   'log-log': {
@@ -652,49 +648,6 @@ export const paperPages: Record<string, PaperPageContent> = {
       { href: '/triangle-grid/', text: 'Triangle Grid Paper' },
       { href: '/hex-grid/', text: 'Hexagonal Grid Paper' },
       { href: '/engineering/', text: 'Engineering Paper' },
-    ],
-  },
-  english: {
-    intro:
-      'Printable staff paper turns a melody in your head into a lead sheet you can read and share, with blank five-line staves ready to print in 7 paper sizes. Write the tune on the staff, the chord symbol above it and the lyric below — every sheet free and watermark-free.',
-    takeaways: [
-      'A lead sheet keeps three things on one staff: the melody, the chord symbol and the lyric.',
-      'Each A4 page holds about 9 staves, enough for a verse and a chorus with room to rewrite.',
-      'The PDF and SVG are vector files, so the print stays crisp at any size.',
-    ],
-    whatIs:
-      'Printable staff paper is a sheet of blank five-line staves you print at home for writing music by hand. Songwriters use it to build lead sheets, with the melody on the staff, a chord symbol above each beat and the lyric below the line. A blank A4 page fits about nine staves, so one sheet can hold a verse, a chorus and space to revise.',
-    article: [
-      { h3: 'What is a lead sheet', body: 'A lead sheet puts the melody on a staff with chord symbols written above it and the lyrics below. It is the standard one-page format for a song, giving a band or collaborator everything they need to play the tune without a full score.' },
-      { h3: 'Writing a melody on the staff', body: 'Write the tune one phrase at a time, placing each note head on its line or space. Leave a little room between phrases so you can correct a note without crowding the bar or squeezing the next one.' },
-      { h3: 'Placing chord symbols', body: 'Write the chord name above the staff at the beat where it changes, keeping the symbols small and level. Most pop and folk songs move through four to six chords, so one staff usually holds two or three changes.' },
-      { h3: 'Adding lyrics under the staff', body: 'Line each word up under the note it is sung on, using the space between staves for a full line of text. If the lyric is long, split the song across two sheets so the words never run together.' },
-      { h3: 'Printing a clean lead sheet', body: 'Print at 100% scale on A4 or Letter so the staves keep their spacing, and print in grayscale to keep the page easy to read. Make a few copies so you can scribble edits without losing the original.' },
-    ],
-    sizing: [
-      { opt: 'A4 / Letter', feel: 'About 9 staves per page', use: 'Lead sheets and songwriting' },
-      { opt: 'A3 / Tabloid', feel: 'Larger, wider-spaced staves', use: 'Young students and easy reading' },
-      { opt: 'Poster', feel: 'Very large staves', use: 'Classroom charts and displays' },
-    ],
-    printing: [
-      'Choose a paper size for your lead sheet.',
-      'Download the PDF for printing, or the SVG to edit.',
-      'Print at 100% scale so each staff keeps its true spacing.',
-      'Print in grayscale to save colour ink.',
-    ],
-    faq: [
-      { q: 'What is printable staff paper used for?', a: 'It is blank five-line staves you print at home to hand-write music, and songwriters use it most for lead sheets that combine melody, chords and lyrics on one page.' },
-      { q: 'What is a lead sheet?', a: 'A lead sheet is a one-page song chart with the melody on a staff, chord symbols written above the staff and the lyrics written below it.' },
-      { q: 'Where do chord symbols go on staff paper?', a: 'Chord symbols go above the staff at the beat where the chord changes, so a player can read the harmony while following the melody.' },
-      { q: 'How do I line up lyrics under the notes?', a: 'Write each word under the note it is sung on, leaving the space between staves for a full line of text. Wider spacing helps when the lyric is long.' },
-      { q: 'Which paper size should I print a lead sheet on?', a: 'A4 and Letter are standard and each holds about 9 staves. Use A3 or Tabloid when you want larger staves for easier reading.' },
-      { q: 'Can I print a copy for each band member?', a: 'Yes. Print one lead sheet per player or save the PDF and share the file, with no download limit.' },
-    ],
-    related: [
-      { href: '/lined-paper/', text: 'Lined Paper' },
-      { href: '/dot-grid/', text: 'Dot Grid Paper' },
-      { href: '/cornell/', text: 'Cornell Notes Paper' },
-      { href: '/square-grid/', text: 'Square Grid' },
     ],
   },
   engineering: {
