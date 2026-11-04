@@ -14,7 +14,6 @@ const LINE_COLOR = defaultGridColor.hex;
 
 type Orient = 'portrait' | 'landscape';
 const ORIENTS: Orient[] = ['portrait', 'landscape'];
-const TYPES = paperTypes.map((t) => t.slug);
 
 function orientDims(w: number, h: number, o: Orient) {
   return o === 'landscape' ? { w: h, h: w } : { w, h };
@@ -26,8 +25,10 @@ function rgb01(hex: string) {
 }
 
 // Vector PDF from the same primitives that drive the SVG preview.
-async function primsToPdf(prims: Prim[], w: number, h: number, colorHex: string): Promise<Uint8Array> {
+async function primsToPdf(prims: Prim[], w: number, h: number, colorHex: string, title: string): Promise<Uint8Array> {
   const doc = await PDFDocument.create();
+  doc.setTitle(title);
+  doc.setAuthor('Online Graph Paper');
   const page = doc.addPage([w * MM_TO_PT, h * MM_TO_PT]);
   const font = await doc.embedFont(StandardFonts.Helvetica);
   const color = rgb01(colorHex);
@@ -69,7 +70,8 @@ function svgFor(w: number, h: number, prims: Prim[], color: string): string {
 async function main() {
   const files: { ext: string; size: number }[] = [];
 
-  for (const type of TYPES) {
+  for (const t of paperTypes) {
+    const type = t.slug;
     const pdfDir = join('public', 'downloads', type);
     const imgDir = join('public', 'images', type);
     mkdirSync(pdfDir, { recursive: true });
@@ -82,7 +84,9 @@ async function main() {
           const base = `${size.id}-${orient}-${spacing.id}`;
           const prims = gridPrims(type, dims.w, dims.h, spacing.mm);
 
-          const pdfBytes = await primsToPdf(prims, dims.w, dims.h, LINE_COLOR);
+          const orientName = orient === 'portrait' ? 'Portrait' : 'Landscape';
+          const title = `${t.name} — ${size.name} ${orientName} ${spacing.id}`;
+          const pdfBytes = await primsToPdf(prims, dims.w, dims.h, LINE_COLOR, title);
           writeFileSync(join(pdfDir, `${base}.pdf`), pdfBytes);
           files.push({ ext: 'pdf', size: pdfBytes.length });
 
